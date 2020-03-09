@@ -2,10 +2,7 @@ package com.atguigu.springboot04.controller;
 
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 //这个类的所有方法返回的数据直接写给浏览器，（如果是对象转为json数据）
 /*@ResponseBody
@@ -14,9 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloController {
 
 
-    @RequestMapping("/hello")
-    public String hello(){
-        return "hello world quick!";
+    @RequestMapping("/index")
+    public void index(){
+        return ;
     }
 
     // RESTAPI的方式

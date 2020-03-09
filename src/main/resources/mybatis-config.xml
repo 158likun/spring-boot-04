@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- XML 配置文件包含对 MyBatis 系统的核心设置 -->
+<configuration>
+
+
+    <!-- 指定 MyBatis 数据库配置文件 -->
+    <properties resource="db.properties" />
+
+     指定 MyBatis 所用日志的具体实现 -->
+    <settings>
+        <setting name="logImpl" value="LOG4J" />
+    </settings>
+
+
+    <environments default="mysql">
+
+        <!-- 环境配置，即连接的数据库。 -->
+        <environment id="mysql">
+
+            <!-- 指定事务管理类型，type="JDBC"指直接简单使用了JDBC的提交和回滚设置 -->
+            <transactionManager type="JDBC" />
+
+            <!-- dataSource指数据源配置，POOLED是JDBC连接对象的数据源连接池的实现。 -->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver" />
+                <property name="url" value="jdbc:mysql://47.103.110.16:3306/likun2?serverTimezone=UTC&useSSL=false" />
+                <property name="username" value="root" />
+                <property name="password" value="a" />
+            </dataSource>
+        </environment>
+    </environments>
+<!--mapper就是dao-->
+    <!-- mappers中的mapper resource告诉了MyBatis去哪里找持久化类的映射文件 -->
+    <!--制定映射配置文件的位置，映射配置文件指的是每个dao独立的配置文件-->
+
+    <!--<mappers>
+        <mapper resource="cn/mybatis/mydemo/mapper/CardMapper.xml" />
+    </mappers>-->
+
+    <!--当通过注解配置时-->
+    <!-- mappers中的mapper class告诉了MyBatis去哪里找持久化类的映射类（注解形式） -->
+    <mappers>
+        <mapper class="com.atguigu.springboot04.mapper.UserMapper" />
+
+    </mappers>
+    <!--&lt;!&ndash; spring和MyBatis完美整合，不需要mybatis的配置映射文件 &ndash;&gt;
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="localdataSource" />
+        <property name="mapperLocations" value="classpath:mapper/*.xml"></property>
+    </bean>
+
+    &lt;!&ndash; DAO接口所在包名，Spring会自动查找其下的类 &ndash;&gt;
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.fkhd.whiteshirt.daos" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>-->
+
+
+</configuration>

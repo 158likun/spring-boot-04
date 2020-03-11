@@ -8,16 +8,18 @@ import com.atguigu.springboot04.mapper.UsersMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UsersServiceImpl implements UsersService {
     //连接到UserMapper Bean
-    @Autowired
+    @Autowired//(required = false)
     private UsersMapper usersMapper;
-    @Override
-    public Users getUsers()
+    /*@Override
+    public List<Users> getUsers()
     {
         return usersMapper.findAll();
-    }
+    }*/
     @Override
     public Users getUsers(String id)
     {

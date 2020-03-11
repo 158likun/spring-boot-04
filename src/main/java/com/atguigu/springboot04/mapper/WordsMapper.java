@@ -1,4 +1,4 @@
 package com.atguigu.springboot04.mapper;
 
-public class WordsMapper {
+public interface WordsMapper {
 }

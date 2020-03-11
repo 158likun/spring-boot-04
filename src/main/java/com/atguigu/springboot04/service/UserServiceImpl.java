@@ -6,18 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service //声明成一个spring bean
 public class UserServiceImpl implements UserService {
 
     //连接到UserMapper Bean
-    @Autowired
+    @Autowired//(required = false)
     private UserMapper userMapper;
-    @Override
-    public User getUser()
+   /* @Override
+    public List<User> getUser()
     {
         return userMapper.findAll();
-    }
+    }*/
     @Override
     public User getUser(String id)
     {

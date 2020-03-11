@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    username: root
+    password: a
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.106.110.16:3306/likun2?useUnicode=true&characterEncoding=UTF-8&useSSL=true
+
+
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
+#  开启驼峰命名      
+#  configuration:
+#    map-underscore-to-camel-case: true
+
+#     给mapper  返回的  bean 取一个别名
+#  type-aliases-package: com.yc.bean

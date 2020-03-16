@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>注册页面</title>
@@ -7,8 +7,63 @@
     <link rel="stylesheet" herf="css/bootstrap.min.css"/>
     <link rel="stylesheet" herf="css/bootstrap-theme.min.css"/>
     <script src="js/bootstrap.min.js" type="application/javascript"></script>
+    <link rel="stylesheet" herf="../static/layui/css/layui.css"/>
+    <script type="text/javascript" src="../static/layui/layui.jss" ></script>
 </head>
 <body>
-$END$
+<div style="position: absolute;left:0;right: 0;top: 0;bottom: 0">
+    <div style="display: flex;justify-content: center;margin-top: 10%;margin-left:38%;margin-right:38%;border: solid red;">
+<form class="layui-form" th:action="@{/registertrue}" method="post">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label"><span>*</span>账号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="id" lay-verify="required|phone" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label"><span>*</span>密码</label>
+            <div class="layui-input-inline">
+                <input type="text" name="password" >
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label"><span>*</span>名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name" >
+            </div>
+        </div>
+
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span>*</span>性别</label>
+        <div class="layui-input-block">
+            <input type="radio" name="sex" value="男" title="男" checked="">男<br>
+            <input type="radio" name="sex" value="女" title="女">女<br>
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">个人描述</label>
+        <div class="layui-input-block">
+            <textarea name="description"  style="min-height: 100px;min-width: 200px;max-height: 100px;max-width: 200px;" placeholder="请输入内容" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <!--<div class="layui-form-item layui-form-text">
+      <label class="layui-form-label">编辑器</label>
+      <div class="layui-input-block">
+        <textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="LAY_demo_editor"></textarea>
+      </div>
+    </div>-->
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+    <div th:text="${erro}" style="align-self: center; color: red"></div>
+</form>
+    </div>
+</div>
 </body>
 </html>

@@ -4,18 +4,15 @@ import com.atguigu.springboot04.bean.Users;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface UsersMapper {
-
-  /*  @Select("SELECT * FROM USERS")
-    List<Users> findAll();*/
-    @Select("SELECT * FROM USERS WHERE ID = #{id}")
-    Users findById(@Param("id") String id);
-
-    @Insert("INSERT INTO USERS(ID,NAME,SEX,PASSWORD,DESCRIPTION) VALUES(#{id},#{name},#{sex},#{password},#{description})")
-    int insert(Users user);
-
-    @Update("UPDATE USERS SET  NAME=#{name},PASSWORD=#{password},SEX=#{sex},DESCRIPTION={description} WHERE ID=#{id}")
-    int update(@Param("name") String name,@Param("password") String password,@Param("sex") String sex,@Param("id") String id);
+    List<Users> findAll();
+    Users findById(String id);
+    //通过密码和账号查找
+    Users find(Map<String,Object> map);
+    //注册
+    int insert(Users users);
+    int update(Users users);
 }

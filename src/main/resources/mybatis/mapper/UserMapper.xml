@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--当UserMapper.xml写在com.atguigu.springboot04.mapper包下时要注意约定大于配置
+所以：要在Maven的主、子工程的pom.xml中添加build等文件
+-->
+<!-- namespace:填写映射当前的Mapper接口，所有的增删改查的参数和返回值类型，
+		就可以直接填写缩写，不区分大小写，直接通过方法名去找类型-->
+      <!--
+        parameterType注意:
+        Map传参数，直接在sql中取出key
+        对象传参数，直接在sql中取对象的属性
+        只有一个基本类型，sql中直接去变量名
+        resultType注意：
+        返回List<user>就用user
+        模糊查询时：
+        1.java执行时，传递通配符如："%李%"
+        2.sql语句中如：name like "%李%"
+        -->
+<mapper namespace="com.atguigu.springboot04.mapper.UserMapper">
+    <select id="findById" parameterType="String" resultType="com.atguigu.springboot04.bean.User">
+       select * from user where id=#{id}
+
+    </select>
+
+</mapper>

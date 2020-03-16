@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>登录页面</title>
@@ -8,7 +8,83 @@
     <link rel="stylesheet" herf="css/bootstrap-theme.min.css"/>
     <script src="js/bootstrap.min.js" type="application/javascript"></script>
 </head>
+<link rel="stylesheet" th:herf="@{/layui/css/layui.css}">
+<script type="text/javascript" th:src="@{/layui/layui.jss}" ></script>
 <body>
-$END$
+<!--<li th:if="${session.users == null}">
+</li>
+<div style="display: flex;justify-content: center;border: solid green;position: absolute;left:0;right: 0;top: 0;bottom: 0" >
+<div style="display: flex;justify-content: center;margin-top: 10%">
+    <form th:action="@{/logintrue}" METHOD="post" class="layui-form" action="" style="border: solid red">
+
+
+    <div>
+        <div class="layui-inline">
+            <label class="layui-form-label">账号：</label>
+            <div class="layui-input-inline">
+                <input type="text" name="id" lay-verify="required|phone" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">密码：</label>
+            <div class="layui-input-inline">
+                <input type="password" name="password" lay-verify="email" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+</div>
+</div>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div style="position: absolute;left:0;right: 0;top: 0;bottom: 0">
+    <div style="display: flex;justify-content: center;margin-top: 15%;margin-left:38%;margin-right:38%;border: solid red;">
+    <form th:action="@{/logintrue}" METHOD="post">
+        <div >
+            <label>账号：</label><input type="text"  placeholder="账号" name="id">
+        <br>
+            <label>密码：</label><input type="password" placeholder="密码" name="password">
+        </div>
+        <br>
+        <div th:text="${erro}" style="align-self: center; color: red" >
+        </div>
+        <button type="submit" class="btn btn-default" style="display: flex;justify-content: center;margin-top: 15%">登录</button>
+        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </form>
+    </div>
+</div>
 </body>
 </html>

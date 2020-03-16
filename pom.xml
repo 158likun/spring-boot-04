@@ -54,8 +54,12 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
-
-        <!--整合mybatis-->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>RELEASE</version>
+		</dependency>
+		<!--整合mybatis-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>

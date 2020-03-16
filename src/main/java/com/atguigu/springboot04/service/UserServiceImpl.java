@@ -14,11 +14,11 @@ public class UserServiceImpl implements UserService {
     //连接到UserMapper Bean
     @Autowired//(required = false)
     private UserMapper userMapper;
-   /* @Override
+    @Override
     public List<User> getUser()
     {
         return userMapper.findAll();
-    }*/
+    }
     @Override
     public User getUser(String id)
     {

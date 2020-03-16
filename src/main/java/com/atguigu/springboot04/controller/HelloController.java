@@ -7,13 +7,14 @@ import org.springframework.web.bind.annotation.*;
 //这个类的所有方法返回的数据直接写给浏览器，（如果是对象转为json数据）
 /*@ResponseBody
 @Controller*/
-@RestController
+@Controller
 public class HelloController {
 
 
-    @RequestMapping("/index")
-    public void index(){
-        return ;
+    @RequestMapping("/")
+    @ResponseBody
+    public String index(){
+        return "hello";
     }
 
     // RESTAPI的方式

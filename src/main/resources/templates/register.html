@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <title>注册页面</title>
     <meta http-equiv="Content-Type" content="text/html;charest=UTF-8"/>
-    <link rel="stylesheet" herf="css/bootstrap.min.css"/>
-    <link rel="stylesheet" herf="css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+         <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
+      <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.min.js" type="application/javascript"></script>
-    <link rel="stylesheet" herf="../static/layui/css/layui.css"/>
-    <script type="text/javascript" src="../static/layui/layui.jss" ></script>
+   <!-- <link rel="stylesheet" href="layui/css/layui.css">-->
 </head>
 <body>
 <div style="position: absolute;left:0;right: 0;top: 0;bottom: 0">
+    <div th:insert="~{navigation :: nav}">
+    </div>
     <div style="display: flex;justify-content: center;margin-top: 10%;margin-left:38%;margin-right:38%;border: solid red;">
 <form class="layui-form" th:action="@{/registertrue}" method="post">
     <div class="layui-form-item">
@@ -65,5 +67,10 @@
 </form>
     </div>
 </div>
+
+<!--<script src="layui/layui.js"></script>
+<script>
+    //有layui网页特效的JS代码 输入区
+</script>-->
 </body>
 </html>

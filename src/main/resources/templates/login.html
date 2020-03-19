@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>登录页面</title>
-    <meta http-equiv="Content-Type" content="text/html;charest=UTF-8"/>
-    <link rel="stylesheet" herf="css/bootstrap.min.css"/>
-    <link rel="stylesheet" herf="css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+         <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
+      <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.min.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="layui/css/layui.css"><!--layui的css布局-->
 </head>
-<link rel="stylesheet" th:herf="@{/layui/css/layui.css}">
-<script type="text/javascript" th:src="@{/layui/layui.jss}" ></script>
 <body>
 <!--<li th:if="${session.users == null}">
-</li>
+</li>-->
+<!--
 <div style="display: flex;justify-content: center;border: solid green;position: absolute;left:0;right: 0;top: 0;bottom: 0" >
 <div style="display: flex;justify-content: center;margin-top: 10%">
     <form th:action="@{/logintrue}" METHOD="post" class="layui-form" action="" style="border: solid red">
@@ -41,7 +41,8 @@
     </div>
 </form>
 </div>
-</div>-->
+</div>
+-->
 
 
 
@@ -71,6 +72,8 @@
 
 
 <div style="position: absolute;left:0;right: 0;top: 0;bottom: 0">
+    <div th:insert="~{navigation :: nav}">
+    </div>
     <div style="display: flex;justify-content: center;margin-top: 15%;margin-left:38%;margin-right:38%;border: solid red;">
     <form th:action="@{/logintrue}" METHOD="post">
         <div >
@@ -86,5 +89,10 @@
     </form>
     </div>
 </div>
+<!--layui的js布局-->
+<script src="layui/layui.js"></script>
+<script>
+    //自己编写的js,就近原则;有layui网页特效的JS代码 输入区
+</script>
 </body>
 </html>

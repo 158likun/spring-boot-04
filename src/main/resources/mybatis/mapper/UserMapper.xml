@@ -18,6 +18,12 @@
         1.java执行时，传递通配符如："%李%"
         2.sql语句中如：name like "%李%"
         -->
+<!--
+sql分页：
+select * from user limit #{0},#{2};0表示数据库表的起始位置，2表示选取得行数
+select * from user limit #{2};2表示从数据库中选取0-1共两行数据
+RowBounds分页（Java代码编写）了解：
+-->
 <mapper namespace="com.atguigu.springboot04.mapper.UserMapper">
     <select id="findById" parameterType="String" resultType="com.atguigu.springboot04.bean.User">
        select * from user where id=#{id}

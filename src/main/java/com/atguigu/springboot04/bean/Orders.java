@@ -2,7 +2,7 @@ package com.atguigu.springboot04.bean;
 
 import java.util.Date;
 
-public class orders {
+public class Orders {
     private Integer number;
     private String idb;
     private String ids;

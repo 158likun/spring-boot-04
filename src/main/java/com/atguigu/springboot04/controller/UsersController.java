@@ -56,16 +56,19 @@ public class UsersController {
             {
                 Users users=(Users)map.get("object");
                 request.getSession().setAttribute("users",users);
+                System.out.println("users.getDescription():"+users.getDescription());
                 return "redirect:/index";
             }
         }
 
     }
+    //注销
     @RequestMapping(value = "/loginfalse",method = RequestMethod.GET)
     public String deletLogin(HttpServletRequest requst){
         requst.getSession().removeAttribute("users");
         return "redirect:/index";
     }
+    //首页注册按钮跳转
     @RequestMapping(value = "/register",method = RequestMethod.GET)
 
     public String register()
@@ -79,7 +82,8 @@ public class UsersController {
         boolean t=usersService.insertUsers(users);*/
         return "register";
     }
-    @RequestMapping(value = "/registertrue",method = RequestMethod.POST)
+    //register页面中form表单跳转
+      @RequestMapping(value = "/registertrue",method = RequestMethod.POST)
 
     public String insertUsers(Users users,Model model)
     {
@@ -115,7 +119,49 @@ public class UsersController {
            usersService.insertUsers(users);
            return "redirect:/login";
        }
+    }
+    //首页个人管理按钮跳转
+    @RequestMapping(value = "/users",method = RequestMethod.GET)
+    public String checkUsers(HttpServletRequest requst){
 
+        return "users";
+    }
+    //个人管理页面左侧下来导航栏修改信息超链接地址
+    @RequestMapping(value = "/userschange",method = RequestMethod.GET)
+    public String changeUsres(HttpServletRequest requst,Model model){
+        return "userschange";
+    }
+    //个人管理的userschange界面的确认修改按钮的控制器
+    @RequestMapping(value = "/userschangetrue",method = RequestMethod.GET)
+    public String changeUsresTrue(HttpServletRequest requst,Model model){
+        if("".equals(requst.getParameter("password"))||"".equals(requst.getParameter("newpassword")))
+        {
+            model.addAttribute("userschangeerro","原密码或新密码不能为空或！");
+            return "userschange";
+        }
+        else
+        {
+            System.out.println(requst.getParameter("id"));
+            Users users=usersService.getUsers(requst.getParameter("id"));
+            if(!users.getPassword().equals(requst.getParameter("password")))
+            {
+                model.addAttribute("userschangeerro","原密码错误！");
+                return "userschange";
+            }
+            else
+            {
+                //表单users
+                Users b=new Users();
+                b.setId(requst.getParameter("id"));
+                b.setName(requst.getParameter("name"));
+                b.setPassword(requst.getParameter("newpassword"));
+                b.setSex(requst.getParameter("sex"));
+                b.setDescription(requst.getParameter("description"));
+                usersService.updateUsers(b);
+                requst.getSession().setAttribute("users",b);
+                return "users";
+            }
+        }
 
     }
 }

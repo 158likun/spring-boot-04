@@ -1,6 +1,6 @@
 package com.atguigu.springboot04.bean;
 
-public class cars {
+public class Cars {
     private Integer number;
     private String idb;
     private String ids;

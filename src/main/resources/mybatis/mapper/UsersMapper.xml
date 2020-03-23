@@ -25,4 +25,8 @@
     <insert id="insert" parameterType="com.atguigu.springboot04.bean.Users" >
         insert into users(id,name,sex,password,description) values(#{id},#{name},#{sex},#{password},#{description});
     </insert>
+    <update id="update" parameterType="com.atguigu.springboot04.bean.Users">
+        update users set name=#{name},sex=#{sex},password=#{password},description=#{description} where id=#{id};
+
+    </update>
 </mapper>

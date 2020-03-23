@@ -1,6 +1,6 @@
 package com.atguigu.springboot04.bean;
 
-public class words {
+public class Words {
     private Integer number;
     private Integer numberg;
     private String idb;

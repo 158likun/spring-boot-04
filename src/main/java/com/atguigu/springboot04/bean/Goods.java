@@ -1,6 +1,6 @@
 package com.atguigu.springboot04.bean;
 
-public class goods {
+public class Goods {
     private Integer number;
     private String id;
     private String kind;

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.springboot04.mapper.GoodsMapper">
+    <insert id="insert" parameterType="com.atguigu.springboot04.bean.Goods">
+        insert into goods(id,kind,price,name,color,picture,description) values(#{id},#{kind},#{price},#{name},#{color},#{picture},#{description});
+    </insert>
+    <select id="count">
+        SELECT count(1) AS count FROM goods;
+    </select>
+    <select id="getPicture" parameterType="String" resultType="String">
+        select picture from goods where picture=#{t};
+    </select>
+</mapper>
+
+
+

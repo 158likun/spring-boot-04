@@ -6,12 +6,33 @@
     <insert id="insert" parameterType="com.atguigu.springboot04.bean.Goods">
         insert into goods(id,kind,price,name,color,picture,description) values(#{id},#{kind},#{price},#{name},#{color},#{picture},#{description});
     </insert>
-    <select id="count">
-        SELECT count(1) AS count FROM goods;
+    <!--重新上架已下架的商品-->
+    <update id="updateGoods" parameterType="com.atguigu.springboot04.bean.Goods">
+        update goods set kind=#{kind},price=#{price},name=#{name},color=#{color},picture=#{picture},udstatus=1,description=#{description} where number=#{number};
+    </update>
+    <select id="count" parameterType="map" resultMap="change">
+        SELECT count(1) as count FROM goods where id=#{id} and udstatus=#{set} and deletstatus=0;
+    </select>
+    <resultMap id="change" type="int">
+        <result column="count"></result>
+    </resultMap>
+    <select id="getGoodsById" parameterType="map" resultType="com.atguigu.springboot04.bean.Goods">
+        select * from goods where id=#{id} and udstatus=#{set} and deletstatus=0 limit #{page},#{size};
     </select>
     <select id="getPicture" parameterType="String" resultType="String">
         select picture from goods where picture=#{t};
     </select>
+    <select id="getGoodsByNumber" parameterType="int" resultType="com.atguigu.springboot04.bean.Goods">
+        select * from goods where number=#{number};
+    </select>
+    <!--设置下架-->
+    <update id="updateGoodsof1" parameterType="int">
+        update goods set udstatus=0 where number=#{number}
+    </update>
+    <!--设置下架商品的删除-->
+    <update id="updateGoodsof3" parameterType="int">
+        update goods set deletstatus=1 where number=#{number}
+    </update>
 </mapper>
 
 

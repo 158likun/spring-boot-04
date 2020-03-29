@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+     <link rel="stylesheet" href="css/bootstrap.min.css"/>
+         <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
+      <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="layui/css/layui.css"><!--layui的css布局-->
+</head>
+<body>
+<input type="checkbox" onmouseover="show()" onmouseout="none()">
+<div id="div1" style="display: none">
+    helloword
+</div>
+<script src="layui/layui.js"></script>
+<script>
+    //自己编写的js,就近原则;有layui网页特效的JS代码 输入区
+    function show() {
+        var a=document.getElementById('div1');
+        a.style.display='block';
+    }
+    function none() {
+        var b=document.getElementById('div1');
+        b.style.display='none';
+    }
+</script>
+</body>
+</html>
+<!--
+事件：
+1. onclick 点击事件
+2. onmouseover 鼠标移入 onmouseout 鼠标移出
+注意点：
+一. js兼容问题
+1.标签不能直接通过id获得，要通过document.getElementById
+二. 函数定义
+1. function
+2. var 别名
+-->

@@ -10,12 +10,21 @@
     <update id="updateGoods" parameterType="com.atguigu.springboot04.bean.Goods">
         update goods set kind=#{kind},price=#{price},name=#{name},color=#{color},picture=#{picture},udstatus=1,description=#{description} where number=#{number};
     </update>
+    <select id="getcount" resultMap="index">
+        SELECT count(1) as count FROM goods where udstatus=1 and deletstatus=0;
+    </select>
+    <resultMap id="index" type="int">
+        <result column="count"></result>
+    </resultMap>
     <select id="count" parameterType="map" resultMap="change">
         SELECT count(1) as count FROM goods where id=#{id} and udstatus=#{set} and deletstatus=0;
     </select>
     <resultMap id="change" type="int">
         <result column="count"></result>
     </resultMap>
+    <select id="getIndexGoods" parameterType="map" resultType="com.atguigu.springboot04.bean.Goods">
+         select * from goods where udstatus=1 and deletstatus=0 limit #{page},#{size};
+    </select>
     <select id="getGoodsById" parameterType="map" resultType="com.atguigu.springboot04.bean.Goods">
         select * from goods where id=#{id} and udstatus=#{set} and deletstatus=0 limit #{page},#{size};
     </select>
@@ -33,6 +42,17 @@
     <update id="updateGoodsof3" parameterType="int">
         update goods set deletstatus=1 where number=#{number}
     </update>
+    <select id="getKinds" resultMap="se">
+        select s.number as snumber ,s.name as sname,s.type as stype,t.name as tname from kinds as s,kinds as t where s.number=t.type;
+    </select>
+    <resultMap id="se" type="com.atguigu.springboot04.bean.Kinds">
+        <result property="number" column="snumber"></result>
+        <result property="name" column="sname"></result>
+        <result property="type" column="stype"></result>
+        <collection property="second" ofType="string">
+            <result column="tname"></result>
+        </collection>
+    </resultMap>
 </mapper>
 
 

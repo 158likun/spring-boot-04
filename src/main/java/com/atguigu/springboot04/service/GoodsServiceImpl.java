@@ -1,6 +1,7 @@
 package com.atguigu.springboot04.service;
 
 import com.atguigu.springboot04.bean.Goods;
+import com.atguigu.springboot04.bean.Kinds;
 import com.atguigu.springboot04.mapper.GoodsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,14 @@ public class GoodsServiceImpl implements GoodsService {
     public int updateGoods(Goods goods){
         return goodsMapper.updateGoods(goods);
     }
+    public int getCount(Integer set){
+        int t=0;
+        if(set==1)
+        {
+            t=goodsMapper.getcount();
+        }
+        return t;
+    }
     public int getCount(String id,Integer set){
        Map<String,Object> map=new HashMap<String,Object>();
        map.put("id",id);
@@ -27,6 +36,17 @@ public class GoodsServiceImpl implements GoodsService {
         int t=goodsMapper.count(map);
         System.out.println(t);
         return t;
+    }
+    public List<Goods> getGoodsById(Integer page,Integer size,Integer set){
+        Map<String,Object> map= new HashMap<String,Object>();
+        map.put("page",page);
+        map.put("size",size);
+        List<Goods> goods=null;
+        if(set==1)
+        {
+            goods=goodsMapper.getIndexGoods(map);
+        }
+        return goods;
     }
     public List<Goods> getGoodsById(String id,Integer page,Integer size,Integer set){
         Map<String,Object> map= new HashMap<String,Object>();
@@ -64,5 +84,8 @@ public class GoodsServiceImpl implements GoodsService {
     }
     public Goods getGoodsByNumber(Integer number){
         return goodsMapper.getGoodsByNumber(number);
+    }
+    public List<Kinds> getKinds(){
+        return goodsMapper.getKinds();
     }
 }

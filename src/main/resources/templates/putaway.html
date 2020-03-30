@@ -136,10 +136,14 @@
                                 <p id="demoText"></p>
                             </div>
                         </div>-->
-                        <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即上架</button>
-                        <button type="reset" class="layui-btn layui-btn-primary"><a th:href="@{/upgood(page=${putaway.page},set=0)}">取消上架</a></button>
                     </div>
                 </div>
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即上架</button>
+            </form>
+            <br/>
+            <br/>
+            <form th:action="@{/upgood(page=${putaway.page},set=0)}">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">取消上架</button>
             </form>
         </div>
     </div>

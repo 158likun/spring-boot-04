@@ -124,7 +124,7 @@ public class GoodsController {
                           Model model) {
         Goods goods = new Goods();
         String filename=file.getOriginalFilename();
-        int name= getFileName("static/images/",filename.substring(filename.lastIndexOf(".")));
+        int name= getFileName("images/",filename.substring(filename.lastIndexOf(".")));
         System.out.println(filename+"0");
         if (!file.isEmpty()) {
             try {
@@ -133,7 +133,7 @@ public class GoodsController {
                 out.write(file.getBytes());
                 out.flush();
                 out.close();
-                String s="static/images/"+name+filename.substring(filename.lastIndexOf("."));
+                String s="images/"+name+filename.substring(filename.lastIndexOf("."));
                 System.out.println(s);
                 //增加商品
                 goods.setId(((Users)request.getSession().getAttribute("users")).getId());
@@ -144,7 +144,8 @@ public class GoodsController {
                 goods.setPicture(s);
                 goods.setDescription(request.getParameter("description"));
                 goodsService.insert(goods);
-                model.addAttribute("page",s);
+                model.addAttribute(goods);
+                return "goods";
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 return "上传失败," + e.getMessage();
@@ -152,8 +153,6 @@ public class GoodsController {
                 e.printStackTrace();
                 return "上传失败," + e.getMessage();
             }
-            model.addAttribute(goods);
-            return "index";
         } else {
             return "上传失败，因为文件是空的.";
         }
@@ -164,7 +163,7 @@ public class GoodsController {
                           HttpServletRequest request) {
         Goods goods = new Goods();
         String filename=file.getOriginalFilename();
-        int name= getFileName("static/images/",filename.substring(filename.lastIndexOf(".")));
+        int name= getFileName("images/",filename.substring(filename.lastIndexOf(".")));
         System.out.println(filename+"0");
         if (!file.isEmpty()) {
             try {
@@ -173,7 +172,7 @@ public class GoodsController {
                 out.write(file.getBytes());
                 out.flush();
                 out.close();
-                String s="static/images/"+name+filename.substring(filename.lastIndexOf("."));
+                String s="images/"+name+filename.substring(filename.lastIndexOf("."));
                 System.out.println(s);
                 //增加商品
                 goods.setId(((Users)request.getSession().getAttribute("users")).getId());

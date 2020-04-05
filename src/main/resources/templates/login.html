@@ -8,6 +8,11 @@
       <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.min.js" type="application/javascript"></script>
 </head>
+<style type="text/css">
+    .set{
+        background: url("/images/index.jpg") repeat;
+    }
+</style>
 <body>
 <!--<li th:if="${session.users == null}">
 </li>-->
@@ -70,11 +75,12 @@
 
 
 
-<div style="position: absolute;left:0;right: 0;top: 0;bottom: 0">
+<div th:background="${background}" style="position: absolute;left:0;right: 0;top: 0;bottom: 0">
     <div th:insert="~{navigation :: nav}">
     </div>
     <div style="display: flex;justify-content: center;margin-top: 15%;margin-left:38%;margin-right:38%;border: solid red;">
     <form th:action="@{/logintrue}" METHOD="post">
+        <input name="number" type="text" style="display: none" th:value="${number}">
         <div >
             <label>账号：</label><input type="text"  placeholder="账号" name="id">
         <br>

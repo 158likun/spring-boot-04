@@ -12,7 +12,8 @@ import java.util.Map;
 public interface GoodsMapper {
     int insert(Goods goods);
     int updateGoods(Goods goods);
-    int getcount();
+    int updateOrigin(Goods goods);
+    int getCountAll();
     int count(Map<String,Object> map);
     List<Goods> getGoodsById(Map<String,Object> map);
     List<Goods> getIndexGoods(Map<String,Object> map);
@@ -21,4 +22,5 @@ public interface GoodsMapper {
     int updateGoodsof3(int number);
     Goods getGoodsByNumber(int number);
     List<Kinds> getKinds();
+    List<String> getSecondKinds();
 }

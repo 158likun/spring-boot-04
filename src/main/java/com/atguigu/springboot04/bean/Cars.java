@@ -4,9 +4,8 @@ public class Cars {
     private Integer number;
     private String idb;
     private String ids;
-    private String name;
-    private String picture;
-    private Double price;
+    private int good;//商品number
+    private int status;
 
     public Integer getNumber() {
         return number;
@@ -32,29 +31,21 @@ public class Cars {
         this.ids = ids;
     }
 
-    public String getName() {
-        return name;
+
+    public int getGood() {
+        return good;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setGood(int good) {
+        this.good = good;
     }
 
-    public String getPicture() {
-        return picture;
+    public int getStatus() {
+        return status;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setStatus(int status) {
+        this.status = status;
     }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
 }
 

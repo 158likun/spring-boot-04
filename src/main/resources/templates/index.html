@@ -37,7 +37,7 @@
         <div style="width: 80%;border: solid gainsboro;padding: 15px;">
             <div th:if="${indexpage.goods != null}" style="display: flex;flex-wrap: wrap;"><!--flex-wrap: wrap;自动换行-->
                 <div th:each="page : ${indexpage.goods}" style="padding: 10px;border: solid lightgray 1px;box-shadow: 0 0 5px lightgray;width: 22%;">
-                    <div><img th:src="${page.picture}" style="display: block; width: 190px; height: 220px;"></div>
+                    <div><a th:href="@{/goodpage(number=${page.number})}"><img th:src="${page.picture}" style="display: block; width: 190px; height: 220px;"></a></div>
                     <div style="color: orangered;white-space:normal; word-break:break-all;overflow:hidden;">￥<span style="font-size:20px;" th:text="${page.price}"></span></div>
                      <!--white-space:normal; word-break:break-all;overflow:hidden; 文字过长自动换行-->
                     <div id="goods_title" style="white-space:normal; word-break:break-all;overflow:hidden;" th:text="${page.name}">

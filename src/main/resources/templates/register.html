@@ -11,7 +11,7 @@
    <!-- <link rel="stylesheet" href="layui/css/layui.css">-->
 </head>
 <body>
-<div style="position: absolute;left:0;right: 0;top: 0;bottom: 0">
+<div th:background="${background}" style="position: absolute;left:0;right: 0;top: 0;bottom: 0">
     <div th:insert="~{navigation :: nav}">
     </div>
     <div style="display: flex;justify-content: center;margin-top: 10%;margin-left:38%;margin-right:38%;border: solid red;">

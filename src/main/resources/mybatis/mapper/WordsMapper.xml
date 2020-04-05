@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.springboot04.mapper.WordsMapper">
+<insert id="insert" parameterType="com.atguigu.springboot04.bean.Words">
+    insert into words(numberg,id,information,top) values(#{numberg},#{id},#{information},#{top});
+</insert>
+    <select id="getWordsByNumberg" parameterType="int" resultType="com.atguigu.springboot04.bean.Words">
+        select * from words where numberg=#{numberg} and status=1;
+    </select>
+    <select id="getWords" parameterType="int" resultType="com.atguigu.springboot04.bean.Words">
+        select * from words where numberg=#{numberg} and status=1 limit 0,2;
+    </select>
+    <select id="getCount" parameterType="int" resultMap="wordscount">
+        select COUNT(1) as count from words where numberg=#{numberg};
+    </select>
+    <resultMap id="wordscount" type="int">
+        <result column="count"></result>
+    </resultMap>
+    <update id="update" parameterType="int">
+        update words set status=0 where number=#{number} and status=1;
+    </update>
+    <select id="getWord" parameterType="int" resultType="com.atguigu.springboot04.bean.Words">
+        select* from words where number=#{numberw} and status=1;
+    </select>
+</mapper>
+
+
+

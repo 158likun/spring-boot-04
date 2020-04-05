@@ -20,13 +20,18 @@ public class UsersController {
 
     //@ApiOperation(value="MyBatis_Demo", notes="MyBatis实现数据库访问demo")
     @RequestMapping(value = "/login",method = RequestMethod.GET)
-    public String login()
-    {
+    public String login(Model model,
+                         @RequestParam(name="number",defaultValue = "0")int number){
+       model.addAttribute("number",number);
+       model.addAttribute("background","images/index.jpg");
         //Users t=usersService.findUsers("B20160304424","123456");
         return "login";
     }
     @RequestMapping(value = "/logintrue",method = RequestMethod.POST)
-    public String getUsers(@RequestParam(name="id") String id, @RequestParam(name="password") String password, HttpServletRequest request, Model model)
+    public String getUsers(@RequestParam(name="id") String id,
+                           @RequestParam(name="password") String password,
+                           @RequestParam(name="number",defaultValue = "0") int number,
+                           HttpServletRequest request, Model model)
     {
         //当参数太多直接Users users然后users.getName();
         //name为html页面name属性值
@@ -57,7 +62,14 @@ public class UsersController {
                 Users users=(Users)map.get("object");
                 request.getSession().setAttribute("users",users);
                 System.out.println("users.getDescription():"+users.getDescription());
-                return "redirect:/index";
+                if(number==0)
+                {
+                    return "redirect:/index";
+                }
+                else
+                {
+                    return "redirect:/goodpage?number="+number;
+                }
             }
         }
 
@@ -71,7 +83,7 @@ public class UsersController {
     //首页注册按钮跳转
     @RequestMapping(value = "/register",method = RequestMethod.GET)
 
-    public String register()
+    public String register(Model model)
     {
        /* Users users=new Users();
         users.setId("");
@@ -80,6 +92,7 @@ public class UsersController {
         users.setPassword("");
         users.setDescription("");
         boolean t=usersService.insertUsers(users);*/
+        model.addAttribute("background","images/index.jpg");
         return "register";
     }
     //register页面中form表单跳转
@@ -87,6 +100,7 @@ public class UsersController {
 
     public String insertUsers(Users users,Model model)
     {
+        model.addAttribute("background","images/index.jpg");
         System.out.println(users.getId()+"\n"+users.getPassword()+"\n"+users.getSex()+"\n"+users.getDescription());
         if("".equals(users.getDescription()))
         {

@@ -10,10 +10,13 @@
     <update id="updateGoods" parameterType="com.atguigu.springboot04.bean.Goods">
         update goods set kind=#{kind},price=#{price},name=#{name},color=#{color},picture=#{picture},udstatus=1,description=#{description} where number=#{number};
     </update>
-    <select id="getcount" resultMap="index">
+    <update id="updateOrigin" parameterType="com.atguigu.springboot04.bean.Goods">
+        update goods set kind=#{kind},price=#{price},name=#{name},color=#{color},udstatus=1,description=#{description} where number=#{number};
+    </update>
+    <select id="getCountAll" resultMap="index1">
         SELECT count(1) as count FROM goods where udstatus=1 and deletstatus=0;
     </select>
-    <resultMap id="index" type="int">
+    <resultMap id="index1" type="int">
         <result column="count"></result>
     </resultMap>
     <select id="count" parameterType="map" resultMap="change">
@@ -52,6 +55,12 @@
         <collection property="second" ofType="string">
             <result column="tname"></result>
         </collection>
+    </resultMap>
+    <select id="getSecondKinds" resultMap="secondkinds">
+        select name from kinds where type!=0;
+    </select>
+    <resultMap id="secondkinds" type="string">
+        <result column="name"></result>
     </resultMap>
 </mapper>
 

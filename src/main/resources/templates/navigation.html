@@ -54,10 +54,7 @@
                         <a href="register">注册</a>
                     </li>
                     <li th:if="${session.users != null}">
-                        <a href="goods">上传商品</a>
-                    </li>
-                    <li th:if="${session.users != null}">
-                        <a href="register">购物车<span style="color: red">&nbsp; 9</span></a>
+                        <a th:href="@{/shoppingcar}">购物车<span style="color: red">&nbsp; 9</span></a>
                     </li>
                     <li class="dropdown" th:if="${session.users != null}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">

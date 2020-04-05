@@ -1,6 +1,7 @@
 package com.atguigu.springboot04.controller;
 
 import com.atguigu.springboot04.bean.Goods;
+import com.atguigu.springboot04.bean.Kinds;
 import com.atguigu.springboot04.bean.Users;
 import com.atguigu.springboot04.dto.Page;
 import com.atguigu.springboot04.dto.PutAway;
@@ -22,11 +23,12 @@ import java.util.Random;
 public class GoodsController {
     @Autowired
     private GoodsService goodsService;
-
     //@ApiOperation(value="MyBatis_Demo", notes="MyBatis实现数据库访问demo")
     @RequestMapping(value = "/goods",method = RequestMethod.GET)
-    public String redirect()
+    public String redirect(Model model)
     {
+            List<String> list=goodsService.getSecondKinds();
+            model.addAttribute("secondkinds",list);
         //Users t=usersService.findUsers("B20160304424","123456");
         //int t=goodsService.insert(goods);
         return "goods";
@@ -99,6 +101,7 @@ public class GoodsController {
           request.getSession().setAttribute("putawaypage",page);
           request.getSession().setAttribute("putawaynumber",number);
           model.addAttribute("putaway",putaway);
+          model.addAttribute("secondkinds",goodsService.getSecondKinds());
           return "putaway";
       }
       return "upgoods";
@@ -117,7 +120,7 @@ public class GoodsController {
       t.setGoods(list);
       return t;
   }
-  //接受上传商品页面的form表单的地址upgoods
+  //接受添加商品页面的form表单的地址upgoods
     @RequestMapping(value = "/upgoods",method = RequestMethod.POST)
     public String tijiao( @RequestParam(name="file")MultipartFile file,//传MultipartFile file 的form表单method必须为POST
                          HttpServletRequest request,
@@ -144,7 +147,8 @@ public class GoodsController {
                 goods.setPicture(s);
                 goods.setDescription(request.getParameter("description"));
                 goodsService.insert(goods);
-                model.addAttribute(goods);
+               /* model.addAttribute(goods);*/
+                /*model.addAttribute()*/
                 return "goods";
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -160,9 +164,27 @@ public class GoodsController {
     //接受putaway页面的form表单的请求
     @RequestMapping(value = "/putaway",method = RequestMethod.POST)
     public String putaway( @RequestParam(name="file")MultipartFile file,//传MultipartFile file 的form表单method必须为POST
-                          HttpServletRequest request) {
+                          HttpServletRequest request,
+                          Model model) {
         Goods goods = new Goods();
         String filename=file.getOriginalFilename();
+        System.out.println(filename);
+        if("".equals(filename))
+        {
+        //如果上架下架商品时不选图片要处理
+            //增加商品
+            goods.setId(((Users)request.getSession().getAttribute("users")).getId());
+            goods.setKind(request.getParameter("kind"));
+            goods.setName(request.getParameter("name"));
+            goods.setPrice(new Double(request.getParameter("price")));
+            goods.setColor(request.getParameter("color"));
+            goods.setDescription(request.getParameter("description"));
+            goods.setNumber((int)request.getSession().getAttribute("putawaynumber"));
+            goodsService.updateOrigin(goods);
+
+            int page=(int)request.getSession().getAttribute("putawaypage");
+            return "redirect:/upgood?page="+page+"&set=0";
+        }
         int name= getFileName("images/",filename.substring(filename.lastIndexOf(".")));
         System.out.println(filename+"0");
         if (!file.isEmpty()) {

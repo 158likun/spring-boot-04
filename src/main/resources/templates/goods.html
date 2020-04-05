@@ -66,9 +66,7 @@
                     <div class="layui-input-block" style="width: 200px">
                         <select name="kind" lay-filter="aihao">
                             <option value=""></option>
-                            <option value="书籍">书籍</option>
-                            <option value="服装" >服装</option>
-                            <option value="电子产品">电子产品</option>
+                            <option th:each="s : ${secondkinds}" th:value="${s}" th:text="${s}"></option>
                         </select>
                     </div>
                 </div>

@@ -3,8 +3,11 @@ package com.atguigu.springboot04.controller;
 import com.atguigu.springboot04.bean.Goods;
 import com.atguigu.springboot04.bean.Kinds;
 import com.atguigu.springboot04.bean.Users;
+import com.atguigu.springboot04.bean.Words;
 import com.atguigu.springboot04.dto.Page;
 import com.atguigu.springboot04.service.GoodsService;
+import com.atguigu.springboot04.service.WordsService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +25,8 @@ import java.util.List;
 public class IndexController {
     @Autowired
     private GoodsService goodsService;
+    @Autowired
+    private WordsService wordsServicec;
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     public String index(HttpServletRequest request,
                         Model model,
@@ -37,7 +42,7 @@ public class IndexController {
         return "index";
     }
     public Page common(Integer page,Integer size,Integer set){
-        int s=goodsService.getCount(set);
+        int s=goodsService.getCountAll(set);
         Page t=new Page();
         t.setPageInation(s,page,size);
         List<Goods> list=null;
@@ -49,4 +54,26 @@ public class IndexController {
         return t;
     }
     // RESTAPI的方式
+    //首页进入商品详情页面
+    @RequestMapping(value = "/goodpage",method = RequestMethod.GET)
+    public String goodPage(Model model,
+                            @RequestParam(name="number") Integer number
+                           ){
+        Goods g=goodsService.getGoodsByNumber(number);
+        model.addAttribute("goodpage",g);
+        model.addAttribute("all",0);
+        List<Words> words=wordsServicec.getWords(number);
+        for(Words c: words)
+        {
+            System.out.println(c.getId()+" "+c.getTime());
+        }
+        model.addAttribute("comment",words);
+        return "goodpage";
+    }
+    @RequestMapping(value = "/ups",method = RequestMethod.GET)
+    public String ups(Model model
+    ){
+        model.addAttribute("sure","index");
+        return "up";
+    }
 }

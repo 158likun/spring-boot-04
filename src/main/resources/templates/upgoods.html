@@ -73,6 +73,7 @@
                             <th>名称</th>
                             <th>价格</th>
                             <th>颜色</th>
+                            <th>描述</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -84,8 +85,10 @@
                             <td th:text="${good.name}"></td>
                             <td th:text="${good.price}"></td>
                             <td th:text="${good.color}"></td>
+                            <td th:text="${good.description}"></td>
+
                             <td>
-                                <a th:href="@{/upgood(page=${pageination.page},set=1,number=${good.number})}">
+                                <a th:href="@{/upgood(page=${pageination.page},set=1,number=${good.number})}" style="text-decoration: none;">
                                     <span style="color: red">
                                         下架
                                     </span>

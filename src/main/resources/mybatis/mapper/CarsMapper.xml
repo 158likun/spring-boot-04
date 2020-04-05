@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.springboot04.mapper.CarsMapper">
+    <select id="getCars" parameterType="map" resultType="com.atguigu.springboot04.bean.Cars">
+        select * from cars where idb=#{id} and status=1 limit #{l},#{r};
+    </select>
+    <update id="update" parameterType="int">
+        update cars set status=0 where number=#{number} and status=1;
+    </update>
+    <update id="updateAll" parameterType="string">
+        update cars set status=0 where idb=#{id} and status=1;
+    </update>
+    <update id="updateByNumber" parameterType="int">
+        update cars set status=0 where number=#{number} and status=1;
+    </update>
+    <!--*** 注意: 一个项目中resultMap的id必须唯一-->
+    <select id="getCount" parameterType="string" resultMap="change2">
+        SELECT count(1) as count FROM cars where idb=#{id} and status=1;
+    </select>
+    <resultMap id="change2" type="int">
+        <result column="count"></result>
+    </resultMap>
+</mapper>
+
+
+

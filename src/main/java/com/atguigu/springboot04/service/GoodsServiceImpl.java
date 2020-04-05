@@ -21,13 +21,17 @@ public class GoodsServiceImpl implements GoodsService {
     public int updateGoods(Goods goods){
         return goodsMapper.updateGoods(goods);
     }
-    public int getCount(Integer set){
+    public int getCountAll(Integer set){
         int t=0;
         if(set==1)
         {
-            t=goodsMapper.getcount();
+            t=goodsMapper.getCountAll();
+            System.out.println(t+" index1");
         }
         return t;
+    }
+    public int updateOrigin(Goods goods){
+        return goodsMapper.updateOrigin(goods);
     }
     public int getCount(String id,Integer set){
        Map<String,Object> map=new HashMap<String,Object>();
@@ -87,5 +91,8 @@ public class GoodsServiceImpl implements GoodsService {
     }
     public List<Kinds> getKinds(){
         return goodsMapper.getKinds();
+    }
+    public List<String> getSecondKinds(){
+        return goodsMapper.getSecondKinds();
     }
 }

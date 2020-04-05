@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商品详情页</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+         <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
+      <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="layui/css/layui.css"><!--layui的css布局-->
+</head>
+<style>
+    #goods_title:hover{
+        color: red;
+        cursor: pointer;
+    }
+</style>
+<body>
+<div>
+<div th:insert="~{navigation :: nav}">
+</div>
+<div style="display:flex;">
+    <div class="left" style="width: 35%;">
+        <img th:src="${goodpage.picture}" style="display: block; width:90%; height: 400px;margin-left: 0px;">
+    </div>
+    <div class="right"style="width: 65%;">
+        <!--white-space:normal; word-break:break-all;overflow:hidden; 文字过长自动换行-->
+        <div id="goods_title" style="white-space:normal; word-break:break-all;overflow:hidden;font-size: 30px;" th:text="${goodpage.description}">
+        </div>
+        <br/>
+        <div style="display: flex;">
+        <label style="color: red;">名称：</label>
+        <div th:text="${goodpage.name}" style="white-space:normal; word-break:break-all;overflow:hidden;"></div>
+        </div>
+        <br/>
+        <div style="display: flex;">
+            <label style="color: red;">价格：</label>
+            <div style="color: orangered;white-space:normal; word-break:break-all;overflow:hidden;">￥<span style="font-size:20px;" th:text="${goodpage.price}"></span></div>
+            <!--white-space:normal; word-break:break-all;overflow:hidden; 文字过长自动换行-->
+        </div>
+        <br/>
+        <div style="display: flex;">
+            <label style="color: red;">颜色：</label>
+            <div th:text="${goodpage.color}" style="white-space:normal; word-break:break-all;overflow:hidden;"></div>
+        </div>
+        <br/>
+        <div style="display: flex;">
+            <label style="color: red;">卖方：</label>
+            <div STYLE="color: gray;font-size: 12px;white-space:normal; word-break:break-all;overflow:hidden;" th:text="${goodpage.id}"></div>
+        </div>
+        <br/>
+        <div style="display: flex;flex-wrap: wrap;margin-bottom: 0px;">
+            <form th:action="@{/}">
+                <input type="text" name="number" th:value="${goodpage.number}" style="display: none;">
+                <!--<input type="text" name="set" value="" style="display: none;">-->
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1;" style="margin-bottom: 0px;">添加购物车</button>
+            </form>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <form th:action="@{/}">
+                <input type="text" name="number" th:value="${goodpage.number}" style="display: none;">
+               <!-- <input type="text" name="set" value="" style="display: none;">-->
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1;" style="margin-bottom: 0px;">立即购买</button>
+                </form>
+        </div>
+    </div>
+</div>
+    <div>
+        <div style="border-bottom: 1px solid gray;">
+        </div>
+    <div>
+        <div th:if="${comment != null}" th:each="c : ${comment}" style="border-bottom: 1px solid gray;">
+        <div style="display: flex;flex-wrap: wrap;">
+            #<span th:text="${c.top}"></span>楼&nbsp;&nbsp;<span th:text="${c.time}"></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span th:text="${c.id}"></span>
+            <div th:if="${session.users != null}">
+            <div th:if="${c.id.equals(session.users.id) == true}">
+
+                &nbsp;&nbsp;<a th:href="@{/comment(set=4,number=${goodpage.number},numberw=${c.number})}" style="text-decoration: none;color: red;">删除</a>
+            </div>
+            <div th:if="${c.id.equals(session.users.id) == false}">
+                &nbsp;&nbsp;<a th:href="@{/comment(set=5,number=${goodpage.number},numberw=${c.number})}" style="text-decoration: none;color: red;">回复</a>
+                <!--form th:action="@{/goodpage}">
+                    <input name="number" type="text" style="display: none" th:value="${goodpage.number}">
+                    <input name="set" type="text" style="display: none" value="4">
+                    <input name="numberw" type="text" style="display: none" th:value="${c.number}">-->
+                <!--<a th:href="@{/commment(set=4,number=${goodpage.number},numberw=${c.number})}" style="text-decoration: none;color: red;">回复</a>-->
+            </div>
+            </div>
+        </div>
+            <br>
+            <div th:text="${c.information}" style="display: flex;flex-wrap: wrap;">
+            </div>
+            <br>
+        </div>
+        <div th:if="${all==0}" style="align-content: center;">
+        <a th:href="@{/comment(set=2,number=${goodpage.number})}" style="align-content: center;text-decoration: none;">显示全部评论>></a>
+        </div>
+        <div th:if="${all==1}" style="align-content: center;">
+            <a th:href="@{/comment(set=3,number=${goodpage.number})}" style="align-content: center;text-decoration: none;">关闭全部评论<<</a>
+        </div>
+        <br>
+        <form th:action="@{/comment}">
+        <div class="layui-form-item layui-form-text">
+            <input name="number" type="text" style="display: none" th:value="${goodpage.number}">
+            <label class="layui-form-label" style="width: 100px">发布留言：</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入留言" name="information" class="layui-textarea" th:text="${words}"></textarea>
+                <br>
+                <div th:if="${erro!=null}" th:text="${erro}" style="color: red;"></div>
+                <br>
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">提交留言</button>
+            </div>
+        </div>
+        </form>
+    </div>
+    </div>
+    <div style="display: flex;">
+        推荐区
+    </div>
+</div>
+<script src="layui/layui.js"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script type="text/javascript">
+function  diji() {
+    var id=document.getElementsById("description").innerText="@";
+    alert("12");
+}
+</script>
+</body>
+</html>

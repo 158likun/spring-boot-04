@@ -66,9 +66,7 @@
                     <div class="layui-input-block" style="width: 200px">
                         <select name="kind" lay-filter="aihao">
                             <option th:value="${putaway.good.kind}" th:text="${putaway.good.kind}"></option>
-                            <option value="书籍">书籍</option>
-                            <option value="服装" >服装</option>
-                            <option value="电子产品">电子产品</option>
+                            <option th:each="s : ${secondkinds}" th:value="${s}" th:text="${s}"></option>
                         </select>
                     </div>
                 </div>
@@ -139,11 +137,8 @@
                     </div>
                 </div>
                 <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即上架</button>
-            </form>
-            <br/>
-            <br/>
-            <form th:action="@{/upgood(page=${putaway.page},set=0)}">
-                <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">取消上架</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a th:href="@{/upgood(page=${putaway.page},set=0)}" style="color: red;text-decoration: none;">取消上架</a>
             </form>
         </div>
     </div>

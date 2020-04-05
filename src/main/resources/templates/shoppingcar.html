@@ -2,64 +2,56 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>商品管理</title>
+    <title>购物车</title>
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
          <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
       <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.min.js" type="application/javascript"></script>
     <link rel="stylesheet" href="layui/css/layui.css"><!--layui的css布局-->
-    <style>
-        .container {
-            display: table;
-            width:100%;
-        }
-
-        .container .left,
-        .container .right {
-            display: table-cell;
-        }
-
-        .container .left {
-            width: 20%;
-            background: white;
-        }
-
-        .container .right {
-            width: 80%;
-            background: white;
-        }
-    </style>
 </head>
+<style>
+    .car:hover{
+        color: red;
+        cursor: pointer;
+    }
+</style>
 <body>
 <div th:insert="~{navigation :: nav}">
 </div>
-<div class="container">
-    <div class="left">
-        <ul class="layui-nav layui-nav-tree" lay-filter="test">
-            <!-- 侧边导航: <ul class="layui-nav layui-nav-tree layui-nav-side"> -->
-            <li class="layui-nav-item layui-nav-itemed">
-                <a href="goods">添加商品</a>
-                <!--<dl class="layui-nav-child">
-                    <dd><a href="javascript:;">上架商品页面</a></dd>
-                    <dd><a href="javascript:;">下架商品页面</a></dd>
-                    <dd><a href="">添加商品</a></dd>
-                </dl>-->
-            </li>
-            <li class="layui-nav-item layui-nav-itemed">
-                <a href="upgood">上架商品页面</a>
-            </li>
-            <li class="layui-nav-item layui-nav-itemed">
-                <a href="/upgood?set=0">下架商品页面</a>
-            </li>
-            <li class="layui-nav-item layui-nav-itemed">
-                <a href="/selledgood?set=3">已出售商品页面</a>
-            </li>
-        </ul>
-    </div>
-    <div class="right">
+<div>
+    <div th:if="${session.users != null}">
+       <div style="display: flex;flex-wrap: wrap;">
+          <!-- <form action="shoppingcar?set=4">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">
+                     一键购买
+                </button>
+           </form>
+           -->
+           <div>
+           <a class="car" href="shoppingcar?set=4" style="font-size: 20px;text-decoration: none;">一键购买</a>
+           </div>
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <div>
+           <a class="car" href="shoppingcar?set=5" style="font-size: 20px;text-decoration: none;">清空购物车</a>
+           </div>
+           <!--<form action="/shoppingcar">
+                <button type="submit" name="set" class="layui-btn" lay-submit="" lay-filter="demo1">
 
-        <div th:if="${session.users != null}"><!--class="layui-card-body layui-card" style="padding: 20px" th:if="${session.users != null}"-->
-            <div style="display: flex;margin-left:10px;margin-top:10px;">
+                </button>
+           </form>-->
+           <!--<div th:if="${carInfor != null}">
+               <div th:each="c : ${carInfor.carsInformation}">
+                   <div th:text="${c.good.name}"></div>
+                   <div th:text="${c.car.number}"></div>
+                   <div th:text="${c.users.name}"></div>
+                   <td th:if="${c.good.udstatus==1}">上架</td>
+                   <td th:if="${c.good.udstatus!=1}">下架</td>
+               </div>
+
+           </div>-->
+    </div>
+       <!-- class="layui-card-body layui-card" style="padding: 20px" th:if="${session.users != null}"-->
+            <div style="display: flex;justify-content: center;">
                 <table class="layui-table" >
                     <colgroup>
                         <col width="150">
@@ -73,27 +65,30 @@
                         <th>名称</th>
                         <th>价格</th>
                         <th>颜色</th>
-                        <th>描述</th>
+                        <th>卖方</th>
+                        <th>状态</th>
                         <th>操作</th>
                     </tr>
                     </thead>
-                    <tbody th:if="${pageination0.getGoods() != null}">
+                    <tbody th:if="${carInfor.carsInformation != null}">
 
-                    <tr th:each="good : ${pageination0.getGoods()}">
-                        <td th:text="${good.number}"></td>
-                        <td th:text="${good.kind}"></td>
-                        <td th:text="${good.name}"></td>
-                        <td th:text="${good.price}"></td>
-                        <td th:text="${good.color}"></td>
-                        <td th:text="${good.description}"></td>
+                    <tr th:each="c : ${carInfor.carsInformation}">
+                        <td th:text="${c.car.number}"></td>
+                        <td th:text="${c.good.kind}"></td>
+                        <td th:text="${c.good.name}"></td>
+                        <td th:text="${c.good.price}"></td>
+                        <td th:text="${c.good.color}"></td>
+                        <td th:text="${c.users.name}"></td>
+                        <td th:if="${c.good.udstatus==1}">上架</td>
+                        <td th:if="${c.good.udstatus!=1}">已下架</td>
                         <td>
-                            <a th:href="@{/upgood(page=${pageination0.page},set=3,number=${good.number})}" style="text-decoration: none;">
+                            <a th:href="@{/shoppingcar(page=${carInfor.page},set=2,number=${c.car.number})}" style="text-decoration: none;">
                                     <span style="color: red">
-                                       上架
+                                       购买
                                     </span>
                             </a>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a th:href="@{/upgood(page=${pageination0.page},set=0,number=${good.number})}" style="text-decoration: none;">
+                            <a th:href="@{/shoppingcar(page=${carInfor.page},set=3,number=${c.car.number})}" style="text-decoration: none;">
                                     <span style="color: red">
                                        删除
                                     </span>
@@ -104,34 +99,33 @@
                     </tbody>
                 </table>
             </div>
-            <div th:if="${pageination0.getGoods() != null}" style="display: flex;justify-content: center;">
+            <div th:if="${carInfor.carsInformation != null}" style="display: flex;justify-content: center;">
                 <ul class="pagination">
-                    <li th:if="${pageination0.isFirstpage()}">
-                        <a th:href="/upgood?page=1&set=0" aria-label="Previous">
+                    <li th:if="${carInfor.isFirstpage()}">
+                        <a th:href="/shoppingcar?page=1" aria-label="Previous">
                             <span aria-hidden="true"> 首页</span>
                         </a>
                     </li>
-                    <li th:if="${pageination0.isPrevious()}">
-                        <a th:href="@{/upgood(page=${pageination0.getPage()-1},set=0)}" aria-label="Previous">
+                    <li th:if="${carInfor.isPrevious()}">
+                        <a th:href="@{/shoppingcar(page=${carInfor.getPage()-1})}" aria-label="Previous">
                             <span aria-hidden="true"> 上一页</span>
                         </a>
                     </li>
-                    <li th:each="page : ${pageination0.getPages()}" th:class="${pageination0.getPage() == page}? 'active':''">
-                        <a th:href="@{/upgood(page=${page},set=0)}" th:text="${page}"></a><!--@{/(page=${page})} (page=${page})等价与?page=1 -->
+                    <li th:each="page : ${carInfor.getPages()}" th:class="${carInfor.getPage() == page}? 'active':''">
+                        <a th:href="@{/shoppingcar(page=${page})}" th:text="${page}"></a><!--@{/(page=${page})} (page=${page})等价与?page=1 -->
                     </li>
-                    <li th:if="${pageination0.isNext()}">
-                        <a th:href="@{/upgood(page=${pageination0.getPage()+1},set=0)}" aria-label="Next">
+                    <li th:if="${carInfor.isNext()}">
+                        <a th:href="@{/shoppingcar(page=${carInfor.getPage()+1})}" aria-label="Next">
                             <span aria-hidden="true">下一页</span>
                         </a>
                     </li>
-                    <li th:if="${pageination0.isEndpage()}">
-                        <a th:href="@{/upgood(page=${pageination0.getTotalpage()},set=0)}" aria-label="Next">
+                    <li th:if="${carInfor.isEndpage()}">
+                        <a th:href="@{/shoppingcar(page=${carInfor.getTotalpage()})}" aria-label="Next">
                             <span aria-hidden="true">尾页</span>
                         </a>
                     </li>
                 </ul>
             </div>
-        </div>
     </div>
 </div>
 <script src="layui/layui.js"></script>

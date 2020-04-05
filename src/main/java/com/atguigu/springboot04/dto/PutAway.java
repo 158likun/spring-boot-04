@@ -2,7 +2,7 @@ package com.atguigu.springboot04.dto;
 
 import com.atguigu.springboot04.bean.Goods;
 
-//上架页面属性类
+//下架页面上架时属性类
 public class PutAway {
     private Integer page;//该上架商品所处下架商品页面的页面数
     private Integer set=0;//跳转到下架页面的操作数

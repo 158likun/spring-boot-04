@@ -104,12 +104,17 @@
                         <textarea class="layui-textarea" name="description" th:text="${session.users.getDescription()}"></textarea>
                     </div>
                 </div>
-                <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">确认修改</button>
+                <div style="display: flex;">
+                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">确认修改</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <div style="color: red;" th:if="${userschangeerro!=null}" th:text="${userschangeerro}">
+                    </div>
+                </div>
             </form>
             <br/>
             <br/>
             <form class="layui-form" th:action="@{/users}">
-                <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">放弃修改</button>
+                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">放弃修改</button>
             </form>
         </div>
     </div>

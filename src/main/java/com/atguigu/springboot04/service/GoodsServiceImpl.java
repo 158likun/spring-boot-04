@@ -30,6 +30,7 @@ public class GoodsServiceImpl implements GoodsService {
         }
         return t;
     }
+
     public int updateOrigin(Goods goods){
         return goodsMapper.updateOrigin(goods);
     }
@@ -40,6 +41,12 @@ public class GoodsServiceImpl implements GoodsService {
         int t=goodsMapper.count(map);
         System.out.println(t);
         return t;
+    }
+    public int getCountByKind(String kind){
+        return goodsMapper.getCountByKind(kind);
+    }
+    public int getCountByCheck(String check){
+        return goodsMapper.getCountByCheck(check);
     }
     public List<Goods> getGoodsById(Integer page,Integer size,Integer set){
         Map<String,Object> map= new HashMap<String,Object>();
@@ -60,6 +67,13 @@ public class GoodsServiceImpl implements GoodsService {
         map.put("set",set);
         List<Goods> goods=goodsMapper.getGoodsById(map);
         return goods;
+    }
+    public List<Goods> getGoodsByKinds(String kind,Integer l,Integer r){
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("kind",kind);
+        map.put("l",l);
+        map.put("r",r);
+        return goodsMapper.getGoodsByKinds(map);
     }
     public int getFileName(String name){
         System.out.println(goodsMapper+" 1");
@@ -94,5 +108,44 @@ public class GoodsServiceImpl implements GoodsService {
     }
     public List<String> getSecondKinds(){
         return goodsMapper.getSecondKinds();
+    }
+    public List<Goods> getRecommends(Goods g){
+        Map map=new HashMap();
+        map.put("number",g.getNumber());
+        map.put("kind",g.getKind());
+        map.put("l",0);
+        map.put("r",g.getPrice()+500);
+        List<Goods> goods=goodsMapper.getRecommends(map);
+        System.out.println(goods+"11111111");
+        List<Goods> recommends=null;
+        if(!goods.isEmpty())
+        {
+            if(goods.size()<=10)
+            {
+                recommends=goods;
+            }
+            else
+            {
+
+                int m=0;
+                Double D=((Goods)goods.get(0)).getPrice();
+                for(Goods good: goods){
+                   m+=1;
+                   if(m>10)
+                   {
+                       break;
+                   }
+                   recommends.add(good);
+                }
+            }
+        }
+        return recommends;
+    }
+    public List<Goods> getGoodsByCheck(String check,Integer l,Integer r){
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("check",check);
+        map.put("l",l);
+        map.put("r",r);
+        return goodsMapper.getGoodsByCheck(map);
     }
 }

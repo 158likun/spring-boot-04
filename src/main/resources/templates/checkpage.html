@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>校园二手交易</title>
+    <title>商品搜索页</title>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
     <!-- 新 Bootstrap 核心 CSS 文件 -->
          <link rel="stylesheet" href="css/bootstrap.min.css"/>
@@ -27,26 +27,13 @@
 <div>
     <div th:insert="~{navigation :: nav}">
     </div>
-    <div style="display: flex;">
-        <div style="width: 20%;border: solid gainsboro;">
-            <div th:if="${indexkind != null}">
-            <div th:each="hf:${indexkind}" style="align-content: center;flex-wrap: wrap;">
-                <div style="display: flex;align-content: center;flex-wrap: wrap;font-size: 20px;" th:text="${hf.name}">
-                </div>
-                <div style="display: flex;flex-wrap: wrap;"><!--自动换行flex-wrap: wrap;-->
-                    <div th:each="th : ${hf.getSecond()}" style="margin: 5px;">
-                        <a style="text-decoration: none;" th:href="@{/index(kind=${th.toString()})}" th:text="${th.toString()}" th:class="${th.toString() == kind}? 'a':''"></a>
-                    </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div style="width: 80%;border: solid gainsboro;padding: 15px;">
+        <div style="width: 100%;border: solid gainsboro;padding: 15px;">
+            <div th:if="${indexpage.goods == null}">未搜索到</div>
             <div th:if="${indexpage.goods != null}" style="display: flex;flex-wrap: wrap;"><!--flex-wrap: wrap;自动换行-->
-                <div th:each="page : ${indexpage.goods}" style="margin:  10px;padding:10px;border: solid lightgray 1px;box-shadow: 0 0 5px lightgray;width: 22%;">
+                <div th:each="page : ${indexpage.goods}" style="margin:  10px;padding:10px;border: solid lightgray 1px;box-shadow: 0 0 5px lightgray;width: 18%;">
                     <div><a th:href="@{/goodpage(number=${page.number})}"><img th:src="${page.picture}" style="display: block; width: 190px; height: 220px;"></a></div>
                     <div style="color: orangered;white-space:normal; word-break:break-all;overflow:hidden;">￥<span style="font-size:20px;" th:text="${page.price}"></span></div>
-                     <!--white-space:normal; word-break:break-all;overflow:hidden; 文字过长自动换行-->
+                    <!--white-space:normal; word-break:break-all;overflow:hidden; 文字过长自动换行-->
                     <div id="goods_title" style="white-space:normal; word-break:break-all;overflow:hidden;" th:text="${page.name}">
                     </div>
                     <div STYLE="color: gray;font-size: 12px;white-space:normal; word-break:break-all;overflow:hidden;" th:text="${page.id}"></div>
@@ -55,33 +42,31 @@
             <div th:if="${indexpage.goods != null}" style="display: flex;justify-content: center;">
                 <ul class="pagination">
                     <li th:if="${indexpage.isFirstpage()}">
-                        <a th:href="/index?page=1&kind=${kind}" aria-label="Previous">
+                        <a th:href="/check?page=1&check=${check}" aria-label="Previous">
                             <span aria-hidden="true"> 首页</span>
                         </a>
                     </li>
                     <li th:if="${indexpage.isPrevious()}">
-                        <a th:href="@{/index(page=${indexpage.getPage()-1},kind=${kind})}" aria-label="Previous">
+                        <a th:href="@{/check(page=${indexpage.getPage()-1},check=${check})}" aria-label="Previous">
                             <span aria-hidden="true"> 上一页</span>
                         </a>
                     </li>
                     <li th:each="page : ${indexpage.getPages()}" th:class="${indexpage.getPage() == page}? 'active':''">
-                        <a th:href="@{/index(page=${page},kind=${kind})}" th:text="${page}"></a><!--@{/(page=${page})} (page=${page})等价与?page=1 -->
+                        <a th:href="@{/check(page=${page},check=${check})}" th:text="${page}"></a><!--@{/(page=${page})} (page=${page})等价与?page=1 -->
                     </li>
                     <li th:if="${indexpage.isNext()}">
-                        <a th:href="@{/index(page=${indexpage.getPage()+1},kind=${kind})}" aria-label="Next">
+                        <a th:href="@{/check(page=${indexpage.getPage()+1},check=${check})}" aria-label="Next">
                             <span aria-hidden="true">下一页</span>
                         </a>
                     </li>
                     <li th:if="${indexpage.isEndpage()}">
-                        <a th:href="@{/index(page=${indexpage.getTotalpage()},kind=${kind})}" aria-label="Next">
+                        <a th:href="@{/check(page=${indexpage.getTotalpage()},check=${check})}" aria-label="Next">
                             <span aria-hidden="true">尾页</span>
                         </a>
                     </li>
                 </ul>
             </div>
         </div>
-    </div>
-
 </div>
 <script src="layui/layui.js"></script>
 </body>

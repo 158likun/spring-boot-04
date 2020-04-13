@@ -16,7 +16,7 @@
         返回List<user>就用user
         模糊查询时：
         1.java执行时，传递通配符如："%李%"
-        2.sql语句中如：name like "%李%"
+        2.sql语句中如：name like concat('%',#{},'%')
         -->
 <!--
 sql分页：

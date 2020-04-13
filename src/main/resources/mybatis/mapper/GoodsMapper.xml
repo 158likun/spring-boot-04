@@ -19,6 +19,18 @@
     <resultMap id="index1" type="int">
         <result column="count"></result>
     </resultMap>
+    <select id="getCountByKind" parameterType="string" resultMap="index2">
+        SELECT count(1) as count FROM goods where kind=#{kind} and udstatus=1 and deletstatus=0;
+    </select>
+    <resultMap id="index2" type="int">
+        <result column="count"></result>
+    </resultMap>
+    <select id="getCountByCheck" parameterType="string" resultMap="index3">
+        SELECT count(1) as count FROM goods where (name like concat('%',#{check},'%') or name like concat('%',#{check})  or name like concat(#{check},'%') or description like concat('%',#{check},'%') or description like concat('%',#{check}) or description like concat(#{check},'%')) and udstatus=1 and deletstatus=0;
+    </select>
+    <resultMap id="index3" type="int">
+        <result column="count"></result>
+    </resultMap>
     <select id="count" parameterType="map" resultMap="change">
         SELECT count(1) as count FROM goods where id=#{id} and udstatus=#{set} and deletstatus=0;
     </select>
@@ -36,6 +48,9 @@
     </select>
     <select id="getGoodsByNumber" parameterType="int" resultType="com.atguigu.springboot04.bean.Goods">
         select * from goods where number=#{number};
+    </select>
+    <select id="getGoodsByKinds" parameterType="map" resultType="com.atguigu.springboot04.bean.Goods">
+        select* from goods where kind=#{kind} and udstatus=1 and deletstatus=0 limit #{l},#{r};
     </select>
     <!--设置下架-->
     <update id="updateGoodsof1" parameterType="int">
@@ -62,6 +77,12 @@
     <resultMap id="secondkinds" type="string">
         <result column="name"></result>
     </resultMap>
+    <select id="getRecommends" parameterType="map" resultType="com.atguigu.springboot04.bean.Goods">
+        select* from goods where number!=#{number} and kind=#{kind} and price between #{l} and #{r} order by price;
+    </select>
+    <select id="getGoodsByCheck" parameterType="map" resultType="com.atguigu.springboot04.bean.Goods">
+        select* from goods where (name like concat('%',#{check},'%') or name like concat('%',#{check})  or name like concat(#{check},'%') or description like concat('%',#{check},'%') or description like concat('%',#{check}) or description like concat(#{check},'%')) and udstatus=1 and deletstatus=0 limit #{l},#{r};
+    </select>
 </mapper>
 
 

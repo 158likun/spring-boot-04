@@ -14,6 +14,10 @@
         color: red;
         cursor: pointer;
     }
+    .recommends:hover{
+         color: red;
+         cursor: pointer;
+     }
 </style>
 <body>
 <div>
@@ -64,9 +68,9 @@
         </div>
     </div>
 </div>
-    <div>
-        <div style="border-bottom: 1px solid gray;">
-        </div>
+    <div style="border-bottom: 1px solid gray;">
+    </div>
+    <div style="padding-top: 15px;">
     <div>
         <div th:if="${comment != null}" th:each="c : ${comment}" style="border-bottom: 1px solid gray;">
         <div style="display: flex;flex-wrap: wrap;">
@@ -103,7 +107,7 @@
             <input name="number" type="text" style="display: none" th:value="${goodpage.number}">
             <label class="layui-form-label" style="width: 100px">发布留言：</label>
             <div class="layui-input-block">
-                <textarea placeholder="请输入留言" name="information" class="layui-textarea" th:text="${words}"></textarea>
+                <textarea placeholder="请输入留言" id="information" name="information" class="layui-textarea" th:text="${words}"></textarea>
                 <br>
                 <div th:if="${erro!=null}" th:text="${erro}" style="color: red;"></div>
                 <br>
@@ -114,7 +118,19 @@
     </div>
     </div>
     <div style="display: flex;">
-        推荐区
+        <div style="width: 100%;padding: 15px;border-top: 1px solid gray;">
+            <span class="recommends">推荐区：</span>
+            <div style="display: flex;flex-wrap: wrap;"><!--flex-wrap: wrap;自动换行-->
+                <div th:each="page : ${recommends}" style="margin:  10px;padding: 10px;border: solid lightgray 1px;box-shadow: 0 0 5px lightgray;width: 18%;">
+                    <div><a th:href="@{/goodpage(number=${page.number})}"><img th:src="${page.picture}" style="display: block; width: 190px; height: 220px;"></a></div>
+                    <div style="color: orangered;white-space:normal; word-break:break-all;overflow:hidden;">￥<span style="font-size:20px;" th:text="${page.price}"></span></div>
+                    <!--white-space:normal; word-break:break-all;overflow:hidden; 文字过长自动换行-->
+                    <div id="goods_title" style="white-space:normal; word-break:break-all;overflow:hidden;" th:text="${page.name}">
+                    </div>
+                    <div STYLE="color: gray;font-size: 12px;white-space:normal; word-break:break-all;overflow:hidden;" th:text="${page.id}"></div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script src="layui/layui.js"></script>

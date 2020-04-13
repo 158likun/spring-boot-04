@@ -1,6 +1,7 @@
 package com.atguigu.springboot04.controller;
 
 import com.atguigu.springboot04.bean.Users;
+import com.atguigu.springboot04.service.CarsService;
 import com.atguigu.springboot04.service.UsersService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,8 @@ import java.util.Map;
 public class UsersController {
     @Autowired
     private UsersService usersService;
-
+    @Autowired
+    private CarsService carsService;
     //@ApiOperation(value="MyBatis_Demo", notes="MyBatis实现数据库访问demo")
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     public String login(Model model,
@@ -148,6 +150,11 @@ public class UsersController {
     //个人管理的userschange界面的确认修改按钮的控制器
     @RequestMapping(value = "/userschangetrue",method = RequestMethod.GET)
     public String changeUsresTrue(HttpServletRequest requst,Model model){
+        if("".equals(requst.getParameter("name")))
+        {
+            model.addAttribute("userschangeerro","用户名称不能为空！");
+            return "userschange";
+        }
         if("".equals(requst.getParameter("password"))||"".equals(requst.getParameter("newpassword")))
         {
             model.addAttribute("userschangeerro","原密码或新密码不能为空或！");

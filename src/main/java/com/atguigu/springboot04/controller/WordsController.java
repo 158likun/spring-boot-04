@@ -42,6 +42,8 @@ public class WordsController {
             return "index";
         }
         model.addAttribute("goodpage",goods);
+        List<Goods> recommends=goodsService.getRecommends(goods);
+        model.addAttribute("recommends",recommends);
         if(set==1)
         {
             if(information.trim().equals(""))
@@ -63,8 +65,6 @@ public class WordsController {
             List<Words> words=wordsServicec.getWords(number);
             model.addAttribute("comment",words);
             model.addAttribute("words","");
-            Goods g=goodsService.getGoodsByNumber(number);
-            model.addAttribute("goodpage",g);
             return "goodpage";
         }
         if(set==2)
@@ -73,8 +73,6 @@ public class WordsController {
             List<Words> words=wordsServicec.getWordsByNumberg(number);
             model.addAttribute("comment",words);
             model.addAttribute("words","");
-            Goods g=goodsService.getGoodsByNumber(number);
-            model.addAttribute("goodpage",g);
             return "goodpage";
         }
         if(set==3)
@@ -83,8 +81,6 @@ public class WordsController {
             List<Words> words=wordsServicec.getWords(number);
             model.addAttribute("comment",words);
             model.addAttribute("words","");
-            Goods g=goodsService.getGoodsByNumber(number);
-            model.addAttribute("goodpage",g);
             return "goodpage";
         }
         if(set==4)
@@ -94,8 +90,6 @@ public class WordsController {
             List<Words> words=wordsServicec.getWordsByNumberg(number);
             model.addAttribute("comment",words);
             model.addAttribute("words","");
-            Goods g=goodsService.getGoodsByNumber(number);
-            model.addAttribute("goodpage",g);
             return "goodpage";
         }
         if(set==5)
@@ -105,8 +99,6 @@ public class WordsController {
             model.addAttribute("words","@"+w.getId()+":\r\n");
             model.addAttribute("all",1);
             model.addAttribute("comment",words);
-            Goods g=goodsService.getGoodsByNumber(number);
-            model.addAttribute("goodpage",g);
             return "goodpage";
         }
         return "index";

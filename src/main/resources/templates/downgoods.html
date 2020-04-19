@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>商品管理</title>
+    <title>下架商品页面</title>
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
          <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
       <script src="js/jquery-3.4.1.min.js"></script>
@@ -52,7 +52,10 @@
                 <a href="/upgood?set=0">下架商品页面</a>
             </li>
             <li class="layui-nav-item layui-nav-itemed">
-                <a href="/selledgood?set=3">已出售商品页面</a>
+                <a href="/ordersmanage?set=4">买方已付款商品订单页面</a>
+            </li>
+            <li class="layui-nav-item layui-nav-itemed">
+                <a href="/ordersmanage?set=5">买方未付款商品订单页面</a>
             </li>
         </ul>
     </div>
@@ -107,7 +110,7 @@
             <div th:if="${pageination0.getGoods() != null}" style="display: flex;justify-content: center;">
                 <ul class="pagination">
                     <li th:if="${pageination0.isFirstpage()}">
-                        <a th:href="/upgood?page=1&set=0" aria-label="Previous">
+                        <a th:href="@{/upgood(page=1,set=0)}" aria-label="Previous">
                             <span aria-hidden="true"> 首页</span>
                         </a>
                     </li>
@@ -133,6 +136,8 @@
             </div>
         </div>
     </div>
+</div>
+<div th:insert="~{navigation :: bottom}">
 </div>
 <script src="layui/layui.js"></script>
 <script>

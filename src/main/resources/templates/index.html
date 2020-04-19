@@ -55,7 +55,7 @@
             <div th:if="${indexpage.goods != null}" style="display: flex;justify-content: center;">
                 <ul class="pagination">
                     <li th:if="${indexpage.isFirstpage()}">
-                        <a th:href="/index?page=1&kind=${kind}" aria-label="Previous">
+                        <a th:href="@{/index(page=1,kind=${kind})}" aria-label="Previous">
                             <span aria-hidden="true"> 首页</span>
                         </a>
                     </li>
@@ -81,7 +81,8 @@
             </div>
         </div>
     </div>
-
+    <div th:insert="~{navigation :: bottom}">
+    </div>
 </div>
 <script src="layui/layui.js"></script>
 </body>

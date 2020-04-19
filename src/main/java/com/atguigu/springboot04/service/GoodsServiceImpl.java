@@ -109,6 +109,7 @@ public class GoodsServiceImpl implements GoodsService {
     public List<String> getSecondKinds(){
         return goodsMapper.getSecondKinds();
     }
+    //推荐商品
     public List<Goods> getRecommends(Goods g){
         Map map=new HashMap();
         map.put("number",g.getNumber());
@@ -147,5 +148,11 @@ public class GoodsServiceImpl implements GoodsService {
         map.put("l",l);
         map.put("r",r);
         return goodsMapper.getGoodsByCheck(map);
+    }
+    public int updateByNumber(Integer number){
+        return goodsMapper.updateByNumber(number);
+    }
+    public int updateStatusByNumber(int number){
+        return goodsMapper.updateStatusByNumber(number);
     }
 }

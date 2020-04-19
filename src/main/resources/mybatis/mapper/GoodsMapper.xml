@@ -54,11 +54,11 @@
     </select>
     <!--设置下架-->
     <update id="updateGoodsof1" parameterType="int">
-        update goods set udstatus=0 where number=#{number}
+        update goods set udstatus=0 where number=#{number} and udstatus;
     </update>
     <!--设置下架商品的删除-->
     <update id="updateGoodsof3" parameterType="int">
-        update goods set deletstatus=1 where number=#{number}
+        update goods set deletstatus=1 where number=#{number} and udstatus=0;
     </update>
     <select id="getKinds" resultMap="se">
         select s.number as snumber ,s.name as sname,s.type as stype,t.name as tname from kinds as s,kinds as t where s.number=t.type;
@@ -78,11 +78,17 @@
         <result column="name"></result>
     </resultMap>
     <select id="getRecommends" parameterType="map" resultType="com.atguigu.springboot04.bean.Goods">
-        select* from goods where number!=#{number} and kind=#{kind} and price between #{l} and #{r} order by price;
+        select* from goods where number!=#{number} and kind=#{kind} and udstatus=1 and deletstatus=0 and price between #{l} and #{r} order by price;
     </select>
     <select id="getGoodsByCheck" parameterType="map" resultType="com.atguigu.springboot04.bean.Goods">
         select* from goods where (name like concat('%',#{check},'%') or name like concat('%',#{check})  or name like concat(#{check},'%') or description like concat('%',#{check},'%') or description like concat('%',#{check}) or description like concat(#{check},'%')) and udstatus=1 and deletstatus=0 limit #{l},#{r};
     </select>
+    <update id="updateByNumber" parameterType="int">
+        update goods set udstatus=3 where number=#{number} and udstatus=1;
+    </update>
+    <update id="updateStatusByNumber" parameterType="int">
+        update goods set udstatus=1 where number=#{number};
+    </update>
 </mapper>
 
 

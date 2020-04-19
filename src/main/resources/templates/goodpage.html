@@ -53,15 +53,21 @@
             <div STYLE="color: gray;font-size: 12px;white-space:normal; word-break:break-all;overflow:hidden;" th:text="${goodpage.id}"></div>
         </div>
         <br/>
+        <br/>
+        <div th:if="${erro!=null}" th:text="${erro}" style="color: red;">
+        </div>
+        <br/>
         <div style="display: flex;flex-wrap: wrap;margin-bottom: 0px;">
-            <form th:action="@{/}">
+            <form th:action="@{/addshoppingcar}">
                 <input type="text" name="number" th:value="${goodpage.number}" style="display: none;">
+                <input type="text" name="set" value="1" style="display: none;">
                 <!--<input type="text" name="set" value="" style="display: none;">-->
             <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1;" style="margin-bottom: 0px;">添加购物车</button>
             </form>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <form th:action="@{/}">
+            <form th:action="@{/addshoppingcar}">
                 <input type="text" name="number" th:value="${goodpage.number}" style="display: none;">
+                <input type="text" name="set" value="2" style="display: none;">
                <!-- <input type="text" name="set" value="" style="display: none;">-->
                 <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1;" style="margin-bottom: 0px;">立即购买</button>
                 </form>
@@ -74,7 +80,7 @@
     <div>
         <div th:if="${comment != null}" th:each="c : ${comment}" style="border-bottom: 1px solid gray;">
         <div style="display: flex;flex-wrap: wrap;">
-            #<span th:text="${c.top}"></span>楼&nbsp;&nbsp;<span th:text="${c.time}"></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span th:text="${c.id}"></span>
+            #<span th:text="${c.top}"></span>楼&nbsp;&nbsp;<span th:text="${c.date}"></span>&nbsp;&nbsp;|<span th:if="${c.id==goodpage.id}" style="color: #00FF00;">卖家</span>&nbsp;&nbsp;<span th:text="${c.id}"></span>
             <div th:if="${session.users != null}">
             <div th:if="${c.id.equals(session.users.id) == true}">
 
@@ -96,10 +102,10 @@
             <br>
         </div>
         <div th:if="${all==0}" style="align-content: center;">
-        <a th:href="@{/comment(set=2,number=${goodpage.number})}" style="align-content: center;text-decoration: none;">显示全部评论>></a>
+        <a th:href="@{/comment(set=2,number=${goodpage.number})}" style="align-content: center;text-decoration: none;">显示全部留言>></a>
         </div>
         <div th:if="${all==1}" style="align-content: center;">
-            <a th:href="@{/comment(set=3,number=${goodpage.number})}" style="align-content: center;text-decoration: none;">关闭全部评论<<</a>
+            <a th:href="@{/comment(set=3,number=${goodpage.number})}" style="align-content: center;text-decoration: none;">关闭全部留言<<</a>
         </div>
         <br>
         <form th:action="@{/comment}">
@@ -131,6 +137,8 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div th:insert="~{navigation :: bottom}">
     </div>
 </div>
 <script src="layui/layui.js"></script>

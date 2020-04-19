@@ -23,4 +23,6 @@ public interface GoodsService {
     public List<String> getSecondKinds();
     public List<Goods> getRecommends(Goods g);
     public List<Goods> getGoodsByCheck(String check,Integer l,Integer r);
+    public int updateByNumber(Integer number);
+    public int updateStatusByNumber(int number);
 }

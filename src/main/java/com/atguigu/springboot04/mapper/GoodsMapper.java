@@ -28,4 +28,6 @@ public interface GoodsMapper {
     List<String> getSecondKinds();
     List<Goods> getRecommends(Map<String,Object> map);
     List<Goods> getGoodsByCheck(Map<String,Object> map);
+    int updateByNumber(int number);
+    int updateStatusByNumber(int number);
 }

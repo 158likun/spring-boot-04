@@ -138,8 +138,12 @@ public class UsersController {
     }
     //首页个人管理按钮跳转
     @RequestMapping(value = "/users",method = RequestMethod.GET)
-    public String checkUsers(HttpServletRequest requst){
-
+    public String checkUsers(HttpServletRequest request){
+        Users users=(Users)request.getSession().getAttribute("users");
+        if(users==null)
+        {
+            return "redirect:/login";
+        }
         return "users";
     }
     //个人管理页面左侧下来导航栏修改信息超链接地址

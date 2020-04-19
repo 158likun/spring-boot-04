@@ -101,6 +101,8 @@
         <div th:if="${session.users != null}"><!--class="layui-card-body layui-card" style="padding: 20px"-->
             <!-- 当form表单中有file类型的input时要想在controller中拿到，必须设置：method="post" enctype="multipart/form-data"-->
             <form class="layui-form" th:action="@{/putaway}" method="post" enctype="multipart/form-data">
+                <input name="putawaypage" type="text" style="display: none" th:value="${putawaypage}">
+                <input name="putawaynumber" type="text" style="display: none" th:value="${putawaynumber}">
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 100px">商品种类</label>
                     <div class="layui-input-block" style="width: 200px">
@@ -182,6 +184,8 @@
             </form>
         </div>
     </div>
+</div>
+<div th:insert="~{navigation :: bottom}">
 </div>
 <script src="layui/layui.js"></script>
 <script>

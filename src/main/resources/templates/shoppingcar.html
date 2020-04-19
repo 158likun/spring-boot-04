@@ -18,9 +18,9 @@
 <body>
 <div th:insert="~{navigation :: nav}">
 </div>
-<div>
-    <div th:if="${session.users != null}">
-       <div style="display: flex;flex-wrap: wrap;">
+<div th:if="${session.users != null}">
+    <div th:if="${carInfor!= null}">
+       <div style="display: flex;flex-wrap: wrap;" >
           <!-- <form action="shoppingcar?set=4">
                 <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">
                      一键购买
@@ -28,7 +28,7 @@
            </form>
            -->
            <div>
-           <a class="car" href="shoppingcar?set=4" style="font-size: 20px;text-decoration: none;">一键购买</a>
+           <a class="car" th:href="@{/addshoppingcar(page=${carInfor.page},set=4)}" style="font-size: 20px;text-decoration: none;">一键购买</a>
            </div>
            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
            <div>
@@ -49,6 +49,9 @@
                </div>
 
            </div>-->
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <div th:if="${erro!=null}" th:text="${erro}" style="display:flex;flex-wrap: wrap;align-self: center; color: red" >
+           </div>
     </div>
        <!-- class="layui-card-body layui-card" style="padding: 20px" th:if="${session.users != null}"-->
             <div style="display: flex;justify-content: center;">
@@ -82,7 +85,7 @@
                         <td th:if="${c.good.udstatus==1}">上架</td>
                         <td th:if="${c.good.udstatus!=1}">已下架</td>
                         <td>
-                            <a th:href="@{/shoppingcar(page=${carInfor.page},set=2,number=${c.car.number})}" style="text-decoration: none;">
+                            <a th:href="@{/addshoppingcar(page=${carInfor.page},set=3,number=${c.good.number})}" style="text-decoration: none;">
                                     <span style="color: red">
                                        购买
                                     </span>
@@ -102,7 +105,7 @@
             <div th:if="${carInfor.carsInformation != null}" style="display: flex;justify-content: center;">
                 <ul class="pagination">
                     <li th:if="${carInfor.isFirstpage()}">
-                        <a th:href="/shoppingcar?page=1" aria-label="Previous">
+                        <a th:href="@{/shoppingcar(page=1)}" aria-label="Previous">
                             <span aria-hidden="true"> 首页</span>
                         </a>
                     </li>
@@ -127,6 +130,8 @@
                 </ul>
             </div>
     </div>
+</div>
+<div th:insert="~{navigation :: bottom}">
 </div>
 <script src="layui/layui.js"></script>
 <script>

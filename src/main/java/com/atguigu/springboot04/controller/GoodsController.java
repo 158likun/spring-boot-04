@@ -25,8 +25,14 @@ public class GoodsController {
     private GoodsService goodsService;
     //@ApiOperation(value="MyBatis_Demo", notes="MyBatis实现数据库访问demo")
     @RequestMapping(value = "/goods",method = RequestMethod.GET)
-    public String redirect(Model model)
+    public String redirect(HttpServletRequest request,
+                           Model model)
     {
+        Users users=(Users)request.getSession().getAttribute("users");
+        if(users==null)
+        {
+            return "redirect:/login";
+        }
             List<String> list=goodsService.getSecondKinds();
             model.addAttribute("secondkinds",list);
         //Users t=usersService.findUsers("B20160304424","123456");
@@ -62,12 +68,22 @@ public class GoodsController {
       {
           return "upgoods";
       }
+      Goods goods=null;
       if(set==1)
       {
           if(number!=-1)
           {
               //上架页面点击下架
-                goodsService.updateGoodsof(set,number);
+              goods=goodsService.getGoodsByNumber(number);//痛过number得到商品,不管udstatus的值
+              System.out.println(number+"    lk");
+              if(goods.getUdstatus()==1)
+              {
+                  goodsService.updateGoodsof(set,number);
+              }
+              else
+              {
+                  model.addAttribute("erro","该商品已下架或已出售！");
+              }
           }
           Page t=common(o,page,size,set);
           model.addAttribute("pageination",t);
@@ -78,31 +94,50 @@ public class GoodsController {
           if(number!=-1)
           {
               //下架页面点击删除
-              goodsService.updateGoodsof(set,number);
+              goods=goodsService.getGoodsByNumber(number);//痛过number得到商品,不管udstatus的值
+              if(goods.getUdstatus()==0)
+              {
+                  goodsService.updateGoodsof(set,number);
+              }
+              else
+              {
+                  model.addAttribute("erro","该商品已上架或已出售！");
+              }
           }
           Page t=common(o,page,size,set);
           model.addAttribute("pageination0",t);
           return "downgoods";
       }
-      if(set==2)
+     /* if(set==2)
       {
           goodsService.updateGoodsof(set,number);
           Page t=common(o,page,size,set);
           model.addAttribute("pageination2",t);
           return "upgoods";
-      }
+      }*/
       if(set==3)
       {
           //点击下架商品页面的上架链接
-          Goods g=goodsService.getGoodsByNumber(number);
-          PutAway putaway=new PutAway();
-          putaway.setGood(g);
-          putaway.setPage(page);
-          request.getSession().setAttribute("putawaypage",page);
-          request.getSession().setAttribute("putawaynumber",number);
-          model.addAttribute("putaway",putaway);
-          model.addAttribute("secondkinds",goodsService.getSecondKinds());
-          return "putaway";
+          goods=goodsService.getGoodsByNumber(number);//痛过number得到商品,不管udstatus的值
+          if(goods.getUdstatus()==0)
+          {
+              Goods g=goodsService.getGoodsByNumber(number);
+              PutAway putaway=new PutAway();
+              putaway.setGood(g);
+              putaway.setPage(page);
+              model.addAttribute("putawaypage",page);
+              model.addAttribute("putawaynumber",number);
+              model.addAttribute("putaway",putaway);
+              model.addAttribute("secondkinds",goodsService.getSecondKinds());
+              return "putaway";
+          }
+          else
+          {
+              model.addAttribute("erro","该商品已上架或已出售！");
+              Page t=common(o,page,size,0);
+              model.addAttribute("pageination0",t);
+              return "downgoods";
+          }
       }
       return "upgoods";
   }
@@ -117,6 +152,9 @@ public class GoodsController {
       {
           list=goodsService.getGoodsById(id,((t.getPage()-1)*size),size,set);
       }
+//      for(Integer h:t.getPages()){
+//          System.out.println(h+" ");
+//      }
       t.setGoods(list);
       return t;
   }
@@ -164,9 +202,16 @@ public class GoodsController {
     //接受putaway页面的form表单的请求
     @RequestMapping(value = "/putaway",method = RequestMethod.POST)
     public String putaway( @RequestParam(name="file")MultipartFile file,//传MultipartFile file 的form表单method必须为POST
+                           @RequestParam(name="putawaypage") Integer putawaypage,
+                           @RequestParam(name="putawaynumber") Integer putawaynumber,
                           HttpServletRequest request,
                           Model model) {
-        Goods goods = new Goods();
+        Goods goods = goodsService.getGoodsByNumber(putawaynumber);
+        if(goods.getUdstatus()==2)
+        {
+            //情况用户两地登录，其中一人已经上架该商品，并被人购买了
+            return "redirect:/index";
+        }
         String filename=file.getOriginalFilename();
         System.out.println(filename);
         if("".equals(filename))
@@ -179,11 +224,9 @@ public class GoodsController {
             goods.setPrice(new Double(request.getParameter("price")));
             goods.setColor(request.getParameter("color"));
             goods.setDescription(request.getParameter("description"));
-            goods.setNumber((int)request.getSession().getAttribute("putawaynumber"));
+            goods.setNumber(putawaynumber);
             goodsService.updateOrigin(goods);
-
-            int page=(int)request.getSession().getAttribute("putawaypage");
-            return "redirect:/upgood?page="+page+"&set=0";
+            return "redirect:/upgood?page="+putawaypage+"&set=0";
         }
         int name= getFileName("images/",filename.substring(filename.lastIndexOf(".")));
         System.out.println(filename+"0");
@@ -204,10 +247,9 @@ public class GoodsController {
                 goods.setColor(request.getParameter("color"));
                 goods.setPicture(s);
                 goods.setDescription(request.getParameter("description"));
-                goods.setNumber((int)request.getSession().getAttribute("putawaynumber"));
+                goods.setNumber(putawaynumber);
                 goodsService.updateGoods(goods);
-                int page=(int)request.getSession().getAttribute("putawaypage");
-                return "redirect:/upgood?page="+page+"&set=0";
+                return "redirect:/upgood?page="+putawaypage+"&set=0";
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 return "上传失败," + e.getMessage();

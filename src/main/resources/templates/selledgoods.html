@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>买方已付款商品订单页面</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+         <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
+      <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="layui/css/layui.css"><!--layui的css布局-->
+    <style>
+        .container {
+            display: table;
+            width:100%;
+        }
+
+        .container .left,
+        .container .right {
+            display: table-cell;
+        }
+
+        .container .left {
+            width: 10%;
+            background: white;
+        }
+
+        .container .right {
+            width: 90%;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+<div th:insert="~{navigation :: nav}">
+</div>
+<div class="container">
+    <div class="left">
+        <ul class="layui-nav layui-nav-tree" lay-filter="test">
+            <!-- 侧边导航: <ul class="layui-nav layui-nav-tree layui-nav-side"> -->
+            <li class="layui-nav-item layui-nav-itemed">
+                <a href="goods">添加商品</a>
+                <!--<dl class="layui-nav-child">
+                    <dd><a href="javascript:;">上架商品页面</a></dd>
+                    <dd><a href="javascript:;">下架商品页面</a></dd>
+                    <dd><a href="">添加商品</a></dd>
+                </dl>-->
+            </li>
+            <li class="layui-nav-item layui-nav-itemed">
+                <a href="upgood">上架商品页面</a>
+            </li>
+            <li class="layui-nav-item layui-nav-itemed">
+                <a href="/upgood?set=0">下架商品页面</a>
+            </li>
+            <li class="layui-nav-item layui-nav-itemed">
+                <a href="/ordersmanage?set=4">买方已付款商品订单页面</a>
+            </li>
+            <li class="layui-nav-item layui-nav-itemed">
+                <a href="/ordersmanage?set=5">买方未付款商品订单页面</a>
+            </li>
+        </ul>
+    </div>
+    <div class="right">
+
+        <div th:if="${session.users != null}"><!--class="layui-card-body layui-card" style="padding: 20px" th:if="${session.users != null}"-->
+            <div style="display: flex;margin-left:10px;margin-top:10px;">
+                <table class="layui-table" >
+                    <colgroup>
+                        <col width="150">
+                        <col width="200">
+                        <col>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>订单编号</th>
+                        <th>商品名称</th>
+                        <th>商品描述</th>
+                        <th>价格</th>
+                        <th>买方</th>
+                        <th>备注</th>
+                        <th>日期</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody th:if="${orderspage.getOrders() != null}">
+
+                    <tr th:each="orders : ${orderspage.getOrders()}">
+                        <td th:text="${orders.number}"></td>
+                        <td th:text="${orders.name}"></td>
+                        <td th:text="${orders.description}"></td>
+                        <td th:text="${orders.price}"></td>
+                        <td th:text="${orders.idb}"></td>
+                        <td th:text="${orders.bz}"></td>
+                        <td th:text="${orders.date}"></td>
+                        <td>
+                            <a th:href="@{/ordersmanage(page=${orderspage.page},set=4,number=${orders.number})}" style="text-decoration: none;">
+                                    <span style="color: red">
+                                        删除
+                                    </span>
+                            </a>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div th:if="${orderspage.getOrders() != null}" style="display: flex;justify-content: center;">
+                <ul class="pagination">
+                    <li th:if="${orderspage.isFirstpage()}">
+                        <a th:href="@{/ordersmanage(page=1,set=4)}" aria-label="Previous">
+                            <span aria-hidden="true"> 首页</span>
+                        </a>
+                    </li>
+                    <li th:if="${orderspage.isPrevious()}">
+                        <a th:href="@{/ordersmanage(page=${orderspage.getPage()-1},set=4)}" aria-label="Previous">
+                            <span aria-hidden="true"> 上一页</span>
+                        </a>
+                    </li>
+                    <li th:each="page : ${orderspage.getPages()}" th:class="${orderspage.getPage() == page}? 'active':''">
+                        <a th:href="@{/ordersmanage(page=${page},set=4)}" th:text="${page}"></a><!--@{/(page=${page})} (page=${page})等价与?page=1 -->
+                    </li>
+                    <li th:if="${orderspage.isNext()}">
+                        <a th:href="@{/ordersmanage(page=${orderspage.getPage()+1},set=4)}" aria-label="Next">
+                            <span aria-hidden="true">下一页</span>
+                        </a>
+                    </li>
+                    <li th:if="${orderspage.isEndpage()}">
+                        <a th:href="@{/ordersmanage(page=${orderspage.getTotalpage()},set=4)}" aria-label="Next">
+                            <span aria-hidden="true">尾页</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:insert="~{navigation :: bottom}">
+</div>
+<script src="layui/layui.js"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+
+</script>
+</body>
+</html>

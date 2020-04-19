@@ -84,17 +84,32 @@ public class IndexController {
     //首页进入商品详情页面
     @RequestMapping(value = "/goodpage",method = RequestMethod.GET)
     public String goodPage(Model model,
-                            @RequestParam(name="number") Integer number
+                            @RequestParam(name="number") Integer number,
+                           @RequestParam(name="set",defaultValue = "0") Integer set,//set=1表示从上架商品页面点击商品编号进入商品详情页面
+                           @RequestParam(name="page",defaultValue = "-1") Integer page
                            ){
         Goods g=goodsService.getGoodsByNumber(number);
+        if(set==1&&(g.getUdstatus()!=1||g.getDeletstatus()==1))
+        {
+            //表示从上架商品页面点击商品编号进入商品详情页面时该商品已出售或已下架
+            model.addAttribute("erro","该商品已下架或已出售！");
+            return "redirect:/upgood?page="+page;
+        }
+        //长期处于商品详情页面，但该商品已下架时，点击任何事件
+        if(g.getUdstatus()!=1||g.getDeletstatus()==1)
+        {
+            return "redirect:/index";
+        }
         model.addAttribute("goodpage",g);
         model.addAttribute("all",0);
+        //留言区
         List<Words> words=wordsServicec.getWords(number);
         for(Words c: words)
         {
-            System.out.println(c.getId()+" "+c.getTime());
+            System.out.println(c.getId()+" "+c.getDate());
         }
         model.addAttribute("comment",words);
+        //推荐区，推荐商品
         List<Goods> recommends=goodsService.getRecommends(g);
         model.addAttribute("recommends",recommends);
         return "goodpage";

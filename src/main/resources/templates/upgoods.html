@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>商品管理</title>
+    <title>上架商品页面</title>
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
          <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
       <script src="js/jquery-3.4.1.min.js"></script>
@@ -52,7 +52,10 @@
                 <a href="/upgood?set=0">下架商品页面</a>
             </li>
             <li class="layui-nav-item layui-nav-itemed">
-                <a href="/selledgood?set=3">已出售商品页面</a>
+                <a href="/ordersmanage?set=4">买方已付款商品订单页面</a>
+            </li>
+            <li class="layui-nav-item layui-nav-itemed">
+                <a href="/ordersmanage?set=5">买方未付款商品订单页面</a>
             </li>
         </ul>
     </div>
@@ -80,7 +83,7 @@
                         <tbody th:if="${pageination.getGoods() != null}">
 
                         <tr th:each="good : ${pageination.getGoods()}">
-                            <td th:text="${good.number}"></td>
+                            <td><a th:href="@{/goodpage(number=${good.number},set=1,page=${pageination.page})}" style="text-decoration: none;"><span th:text="${good.number}"></span></a></td>
                             <td th:text="${good.kind}"></td>
                             <td th:text="${good.name}"></td>
                             <td th:text="${good.price}"></td>
@@ -102,7 +105,7 @@
                 <div th:if="${pageination.getGoods() != null}" style="display: flex;justify-content: center;">
                     <ul class="pagination">
                         <li th:if="${pageination.isFirstpage()}">
-                            <a th:href="/upgood?page=1" aria-label="Previous">
+                            <a th:href="@{/upgood(page=1)}" aria-label="Previous">
                                 <span aria-hidden="true"> 首页</span>
                             </a>
                         </li>
@@ -128,6 +131,8 @@
                 </div>
         </div>
     </div>
+</div>
+<div th:insert="~{navigation :: bottom}">
 </div>
 <script src="layui/layui.js"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->

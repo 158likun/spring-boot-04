@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.atguigu.springboot04.mapper.WordsMapper">
 <insert id="insert" parameterType="com.atguigu.springboot04.bean.Words">
-    insert into words(numberg,id,information,top) values(#{numberg},#{id},#{information},#{top});
+    insert into words(numberg,id,information,top,date) values(#{numberg},#{id},#{information},#{top},#{date});
 </insert>
     <select id="getWordsByNumberg" parameterType="int" resultType="com.atguigu.springboot04.bean.Words">
         select * from words where numberg=#{numberg} and status=1;

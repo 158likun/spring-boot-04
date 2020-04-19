@@ -9,6 +9,9 @@
     <update id="update" parameterType="int">
         update cars set status=0 where number=#{number} and status=1;
     </update>
+    <update id="updateByGood" parameterType="map">
+        update cars set status=0 where good=#{number} and idb=#{idb} and status=1;
+    </update>
     <update id="updateAll" parameterType="string">
         update cars set status=0 where idb=#{id} and status=1;
     </update>
@@ -22,6 +25,15 @@
     <resultMap id="change2" type="int">
         <result column="count"></result>
     </resultMap>
+    <select id="getCarsByNumber" parameterType="map" resultType="com.atguigu.springboot04.bean.Cars">
+        select* from cars where idb=#{id} and good=#{number} and status=1;
+    </select>
+    <insert id="insert" parameterType="map">
+        insert into cars(idb,ids,good) values(#{idb},#{ids},#{number});
+    </insert>
+    <select id="getCarsNumberById" parameterType="string" resultType="com.atguigu.springboot04.bean.Cars">
+       select* from cars where idb=#{id} and status=1;
+    </select>
 </mapper>
 
 

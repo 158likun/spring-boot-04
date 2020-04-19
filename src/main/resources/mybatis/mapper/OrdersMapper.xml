@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.springboot04.mapper.OrdersMapper">
+   <insert id="insert" parameterType="map">
+       insert into orders(idb,ids,numberg,phone,description,date) values(#{idb},#{ids},#{numberg},#{phone},#{description},#{date});
+   </insert>
+    <select id="getOrdersById" parameterType="map" resultType="com.atguigu.springboot04.bean.Orders">
+       select s.number as number,idb,ids,numberg,price,name,t.description as description,s.status as status,s.sellstatus as sellstatus,date,s.description as bz from orders as s,goods as t where s.numberg=t.number and s.idb=#{id} and s.status=#{status} order by s.number desc limit #{l},#{r};
+    </select>
+    <update id="updateStatusByNumber" parameterType="map">
+        update orders set status=#{status} where number=#{number};
+    </update>
+    <select id="getCount" parameterType="map" resultMap="orders">
+       SELECT count(1) as count FROM orders where idb=#{id} and status=#{set};
+    </select>
+    <resultMap id="orders" type="int">
+        <result column="count"></result>
+    </resultMap>
+    <select id="getOrdersByNumber" parameterType="int" resultType="com.atguigu.springboot04.bean.Orders">
+        select* from orders where number=#{number};
+    </select>
+    <update id="updateSellstatusByNumber" parameterType="map">
+        update orders set sellstatus=#{sell} where number=#{number};
+    </update>
+    <select id="getCountBySellstatus" parameterType="map" resultMap="sellstatusOrders">
+        SELECT count(1) as count FROM orders where ids=#{id} and sellstatus=#{set};
+    </select>
+    <resultMap id="sellstatusOrders" type="int">
+        <result column="count"></result>
+    </resultMap>
+    <select id="getOrdersBySellstatusAndId" parameterType="map" resultType="com.atguigu.springboot04.bean.Orders">
+        select s.number as number,idb,ids,numberg,price,name,t.description as description,s.status as status,s.sellstatus as sellstatus,date,s.description as bz from orders as s,goods as t where s.numberg=t.number and s.ids=#{id} and s.sellstatus=#{status} order by s.number desc limit #{l},#{r};
+    </select>
+</mapper>
+
+
+

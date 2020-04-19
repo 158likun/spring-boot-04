@@ -11,7 +11,8 @@ public class Words {
     private int top;
     private int likecount;//点赞数
     private int status;
-    private Date time;
+    /*private Date time;*/
+    private String date;//日期转换格式
 
     public Integer getNumber() {
         return number;
@@ -61,14 +62,14 @@ public class Words {
         this.likecount = likecount;
     }
 
-    public Date getTime() {
+   /* public Date getTime() {
         return time;
     }
 
     public void setTime(Date time) {
         this.time = time;
     }
-
+*/
     public int getTop() {
         return top;
     }
@@ -83,5 +84,13 @@ public class Words {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }
